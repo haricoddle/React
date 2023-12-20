@@ -21,22 +21,22 @@
   font-weight: 900;
   font-style: italic;
 }
+img{
+  width: 100%;
+  object-fit: cover;
+}
 figure{
   margin: 0;
   position: relative;
-  img{
-    width: 100%;
-    object-fit: cover;
-  }
-  .caption-p{
-    position: absolute;
-    right: 4%;
-    top: 65%;
-    color: white;
-    font-size: 2.5rem;
-    font-style: italic;
-    font-weight: bolder;
-  }
+}
+.caption-p{
+  position: absolute;
+  right: 4%;
+  top: 65%;
+  color: white;
+  font-size: 2.5rem;
+  font-style: italic;
+  font-weight: bolder;
 }
 
 .logo-div{
@@ -65,23 +65,23 @@ figure{
     display: flex;
     column-gap: 20px;
   }
-  button{
-    width: 100px;
-    margin-left: 100px;
-    border: none;
-    padding: 15px;
-    background-color: rgb(173, 173, 173);
-    font-weight: bold;
-    border-radius: 10px;
-  }
-  label{
-    font-weight: bold;
-  }
-  input{
-    border: none;
-    padding: 15px;
-    border-radius: 10px;
-  }
+}
+button{
+  width: 100px;
+  margin-left: 100px;
+  border: none;
+  padding: 15px;
+  background-color: rgb(173, 173, 173);
+  font-weight: bold;
+  border-radius: 10px;
+}
+label{
+  font-weight: bold;
+}
+input{
+  border: none;
+  padding: 15px;
+  border-radius: 10px;
 }
 .social-div{
   display: flex;
@@ -89,7 +89,7 @@ figure{
   padding-inline: 35px;
 }
 
-.log-mesg{
+.homepage-div{
   height: 500px;
   background-color: black;
   color: white;
@@ -97,4 +97,13 @@ figure{
   font-style: italic;
   font-weight: bolder;
   text-align: center;
+  position: relative;
+  
 }
+.homepage-div button{
+  position: absolute;
+  right: 10%;
+ }
+ .log-mesg{
+  padding-top: 100px;
+ }
