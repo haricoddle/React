@@ -6,15 +6,28 @@ import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
     const Navigate = useNavigate();
-    const [name, setName] = useState<string>('');
-    const [dob, setDob] = useState<string>('');
-    const [phone, setPhone] = useState<string>('');
-    const [email, setEmail] = useState<string>('');
-    const [username, setUsername] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
 
-    const body = { name, phone, email, dob, username, password };
+    const [details, setDetails] = useState({
+        name: '',
+        dob: '',
+        phone: '',
+        email: '',
+        userName: '',
+        password: '',
+    });
 
+    const body = {
+        name: details.name,
+        dob: details.dob,
+        phone: details.phone,
+        email: details.email,
+        userName: details.userName,
+        password: details.password,
+    }
+
+    const handleChange = (e: any) => {
+        setDetails({ ...details, [e.target.name]: e.target.value })
+    }
 
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         console.log(body);
@@ -40,32 +53,32 @@ const Signup = () => {
 
                     <div>
                         <label htmlFor="name">Name</label>
-                        <input type="text" name="name" placeholder='Name' onChange={e => setName(e.target.value)} />
+                        <input type="text" name="name" placeholder='Name' onChange={handleChange} />
                     </div>
 
                     <div>
                         <label htmlFor="phone">Phone</label>
-                        <input type="text" name="phone" placeholder='Phone' onChange={e => setPhone(e.target.value)} />
+                        <input type="text" name="phone" placeholder='Phone' onChange={handleChange} />
                     </div>
 
                     <div>
                         <label htmlFor="email">E-mail</label>
-                        <input type="text" name="email" placeholder='E-mail' onChange={e => setEmail(e.target.value)} />
+                        <input type="text" name="email" placeholder='E-mail' onChange={handleChange} />
                     </div>
 
                     <div>
                         <label htmlFor="dob">D.O.B</label>
-                        <input type="date" name="dob" onChange={e => setDob(e.target.value)} />
+                        <input type="date" name="dob" onChange={handleChange} />
                     </div>
 
                     <div>
-                        <label htmlFor="username">Username</label>
-                        <input type="text" name="username" placeholder='username' onChange={e => setUsername(e.target.value)} />
+                        <label htmlFor="userName">Username</label>
+                        <input type="text" name="userName" placeholder='username' onChange={handleChange} />
                     </div>
 
                     <div>
                         <label htmlFor="password">Password</label>
-                        <input type="text" name="password" placeholder='Password' onChange={e => setPassword(e.target.value)} />
+                        <input type="text" name="password" placeholder='Password' onChange={handleChange} />
                     </div>
 
                     <button> Register </button>
