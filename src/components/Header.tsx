@@ -12,7 +12,6 @@ const Header = () => {
                     </div>
                     <div className='users-div p-style'>
                         <p>BOOK NOW</p>
-                        <p>SIGNUP</p>
                     </div>
                 </div>
             </header>

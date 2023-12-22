@@ -53,20 +53,20 @@ figure{
   position: absolute;
   top: 30%;
   right: 40%;
-  height: 300px;
-  gap: 1.2rem;
+  height: 320px;
+  gap: 0.2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   background-color: rgba(246, 238, 238, 0.468);
   border-radius: 10px;
   div{
-    margin: 20px;
+    margin: 15px;
     display: flex;
     column-gap: 20px;
   }
 }
-button{
+#login-btn{
   width: 100px;
   margin-left: 100px;
   border: none;
@@ -74,6 +74,7 @@ button{
   background-color: rgb(173, 173, 173);
   font-weight: bold;
   border-radius: 10px;
+  margin-block: 10px;
 }
 label{
   font-weight: bold;
@@ -107,3 +108,43 @@ input{
  .log-mesg{
   padding-top: 100px;
  }
+.signup-div p{
+  margin-left: 20px;
+}
+.signup-span{
+  font-weight: 700;
+  color: rgb(19, 19, 150);
+}
+.signup-span:hover{
+  text-decoration: underline;
+}
+.signup-div{
+  position: relative;
+}
+.signup-form{
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  background-color: rgba(246, 238, 238, 0.468);
+  flex-direction: column;
+  top: 15%;
+  right: 40%;
+  height: 450px;
+  width: 350px;
+  border-radius: 20px;
+div{
+  margin-block: 10px;
+}
+label {
+  padding-inline: 10px;
+}
+button{
+  margin-left: 70px;
+  border-radius: 25px;
+  padding:20px 60px;
+  border: none;
+  background-color: rgb(19, 19, 150);
+  color: whitesmoke;
+}
+}
