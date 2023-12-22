@@ -16,8 +16,11 @@ const Body = () => {
   }
 
   function handleSignup() {
-    console.log('signup');
     Navigate('/signup')
+  }
+
+  function handleEmployeeLogin() {
+    Navigate('/emplogin')
   }
 
   const body = {
@@ -28,47 +31,49 @@ const Body = () => {
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     console.log(body);
-    axios.post(`${process.env.REACT_APP_URL}/employee/empLogin`, body)
+    axios.post(`${process.env.REACT_APP_URL}/customer/login`, body)
       .then((res) => {
-            console.log(res.data.token);
-            if (res.status === 200) {
-              localStorage.setItem('token', res.data.token);
-              Navigate('/home')
-            }
-        })
-        .catch(error => console.log(error));
-
-      }
+        console.log(res.data.token);
+        if (res.status === 200) {
+          localStorage.setItem('token', res.data.token);
+          Navigate('/home')
+        }
+      })
+      .catch(error => console.log(error));
+  }
 
   return (
 
-      <div className='body-div'>
-        <figure>
-          <img src={img} alt="background" />
-          <p className='caption-p'>START YOUR <br /> RIDE WITH US....</p>
-        </figure>
+    <div className='body-div'>
+      <figure>
+        <img src={img} alt="background" />
+        <p className='caption-p'>START YOUR <br /> RIDE WITH US....</p>
+      </figure>
 
-        <div className='login-div'>
-          <form onSubmit={handleSubmit}>
-            <div>
-              <label htmlFor="userName">Username</label>
-              <input type="text" name="userName" id="username" placeholder='Username' onChange={handleChange} />
-            </div>
-
-            <div>
-              <label htmlFor="password">Password</label>
-              <input type="password" name="password" id="password" placeholder='Password' onChange={handleChange} />
-            </div>
-
-            <button id='login-btn'>LOGIN</button>
-          </form>
-          <div className='signup-div'>
-            <p>Don't have an account? <span className='signup-span' id="signup-span" onClick={handleSignup} onKeyDown={handleSignup}> Sign up</span></p>
+      <div className='login-div'>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="userName">Username</label>
+            <input type="text" name="userName" id="username" placeholder='Username' onChange={handleChange} />
           </div>
+
+          <div>
+            <label htmlFor="password">Password</label>
+            <input type="password" name="password" id="password" placeholder='Password' onChange={handleChange} />
+          </div>
+
+          <button id='login-btn'>LOGIN</button>
+        </form>
+        <div className='signup-div'>
+          <p>Don't have an account? <span className='span' id="signup-span" onClick={handleSignup} onKeyDown={handleSignup}> Sign up</span></p>
+        </div>
+        <div>
+          <button className='emp-login'>Employee ?<span className='span' onClick={handleEmployeeLogin} onKeyDown={handleEmployeeLogin}> login</span></button>
         </div>
       </div>
+    </div>
 
-    );
-  };
+  );
+};
 
-  export default Body;
+export default Body;

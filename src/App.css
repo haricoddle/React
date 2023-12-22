@@ -53,7 +53,7 @@ figure{
   position: absolute;
   top: 30%;
   right: 40%;
-  height: 320px;
+  height: 380px;
   gap: 0.2rem;
   display: flex;
   flex-direction: column;
@@ -101,25 +101,23 @@ input{
   position: relative;
   
 }
-.homepage-div button{
-  position: absolute;
-  right: 10%;
- }
  .log-mesg{
   padding-top: 100px;
+  margin-top: 0;
  }
 .signup-div p{
   margin-left: 20px;
 }
-.signup-span{
+.span{
   font-weight: 700;
   color: rgb(19, 19, 150);
 }
-.signup-span:hover{
+.span:hover{
   text-decoration: underline;
 }
 .signup-div{
   position: relative;
+  border-bottom: 2px solid black;
 }
 .signup-form{
   position: absolute;
@@ -147,4 +145,41 @@ button{
   background-color: rgb(19, 19, 150);
   color: whitesmoke;
 }
+}
+.emp-login{
+  border: none;
+  background-color: rgb(173, 173, 173);
+  color: black;
+  padding: 10px 60px;
+  border-radius: 20px;
+  margin-left: 25px;
+  font-weight: 700;
+}
+.logout-btn{
+  position: absolute;
+  right: 10%;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  background-color: rgb(246, 231, 231);
+}
+.emplogin-div{
+  display: flex;
+  flex-direction: column;
+  form{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 25%;
+    left: 40%;
+    height: 300px;
+    width: 300px;
+    gap: .5rem;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(99, 96, 96, 0.581);
+    input{
+      width: 200px;
+    }
+  }
 }
