@@ -8,31 +8,22 @@ const Signup = () => {
     const Navigate = useNavigate();
 
     const [details, setDetails] = useState({
-        name: '',
-        dob: '',
-        phone: '',
-        email: '',
-        userName: '',
-        password: '',
+        name:String,
+        dob:String,
+        phone:Number,
+        email:String,
+        userName:String,
+        password:String,
     });
-
-    const body = {
-        name: details.name,
-        dob: details.dob,
-        phone: details.phone,
-        email: details.email,
-        userName: details.userName,
-        password: details.password,
-    }
 
     const handleChange = (e: any) => {
         setDetails({ ...details, [e.target.name]: e.target.value })
     }
 
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
-        console.log(body);
+        console.log(details);
         event.preventDefault();
-        axios.post(`${process.env.REACT_APP_URL}/customer/register`, body)
+        axios.post(`${process.env.REACT_APP_URL}/customer/register`, details)
             .then((res) => {
                 console.log(res)
                 if (res.status === 200) {

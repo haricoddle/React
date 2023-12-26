@@ -8,22 +8,17 @@ const EmpLogin = () => {
     const Navigate = useNavigate();
 
     const [details, setDetails] = useState({
-        userName: '',
-        password: '',
+        userName:String,
+        password:String,
     });
 
     const handleDataChange = (e: any) => {
         setDetails({ ...details, [e.target.name]: e.target.value })
     }
 
-    const body = {
-        userName: details.userName,
-        password: details.password,
-    }
-
     function handleLogin(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        axios.post(`${process.env.REACT_APP_URL}/employee/empLogin`, body)
+        axios.post(`${process.env.REACT_APP_URL}/employee/empLogin`, details)
             .then((res) => {
                 if (res.status === 200) {
                     localStorage.setItem('token', res.data.token);

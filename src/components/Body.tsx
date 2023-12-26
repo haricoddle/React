@@ -7,8 +7,8 @@ const Body = () => {
   const Navigate = useNavigate();
 
   const [details, setDetails] = useState({
-    userName: '',
-    password: '',
+    userName:String,
+    password:String,
   });
 
   const handleChange = (e: any) => {
@@ -23,15 +23,10 @@ const Body = () => {
     Navigate('/emplogin')
   }
 
-  const body = {
-    userName: details.userName,
-    password: details.password,
-  }
-
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    console.log(body);
-    axios.post(`${process.env.REACT_APP_URL}/customer/login`, body)
+    console.log(details);
+    axios.post(`${process.env.REACT_APP_URL}/customer/login`, details)
       .then((res) => {
         console.log(res.data.token);
         if (res.status === 200) {
