@@ -12,7 +12,7 @@ const EmpLogin = () => {
         password:String,
     });
 
-    const handleDataChange = (e: any) => {
+    const handleDataChange = (e:  React.ChangeEvent<HTMLInputElement>) => {
         setDetails({ ...details, [e.target.name]: e.target.value })
     }
 
