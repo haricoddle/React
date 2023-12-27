@@ -24,6 +24,7 @@
 img{
   width: 100%;
   object-fit: cover;
+  height: 800px;
 }
 figure{
   margin: 0;
@@ -75,6 +76,7 @@ figure{
   font-weight: bold;
   border-radius: 10px;
   margin-block: 10px;
+  cursor: pointer;
 }
 label{
   font-weight: bold;
@@ -89,24 +91,13 @@ input{
   justify-content: space-between;
   padding-inline: 35px;
 }
-
-.homepage-div{
-  height: 500px;
-  background-color: black;
-  color: white;
-  font-size: 2rem;
-  font-style: italic;
-  font-weight: bolder;
-  text-align: center;
-  position: relative;
-  
-}
 .signup-div p{
   margin-left: 20px;
 }
 .span{
   font-weight: 700;
   color: rgb(19, 19, 150);
+  cursor: pointer;
 }
 .span:hover{
   text-decoration: underline;
@@ -140,6 +131,7 @@ button{
   border: none;
   background-color: rgb(19, 19, 150);
   color: whitesmoke;
+  cursor: pointer;
 }
 }
 .emp-login{
@@ -158,6 +150,7 @@ button{
   border: none;
   border-radius: 10px;
   background-color: rgb(246, 231, 231);
+  cursor: pointer;
 }
 .emplogin-div{
   display: flex;
@@ -171,6 +164,7 @@ button{
     height: 300px;
     width: 300px;
     gap: .5rem;
+    border-radius: 15px;
     align-items: center;
     justify-content: center;
     background-color: rgba(99, 96, 96, 0.581);
@@ -178,4 +172,40 @@ button{
       width: 200px;
     }
   }
+}
+
+.homepage-div button{
+  padding: 10px 15px;
+  border: none;
+  border-radius: 10px;
+  margin-right: 20px;
+  cursor: pointer;
+  position: absolute;
+  z-index: 2;
+  right: 12%;
+  top: -5%;
+}
+.homepage-div{
+  background-color: black;
+  color: white;
+  font-size: 2rem;
+  font-style: italic;
+  font-weight: bolder;
+  text-align: center;
+  position: relative;
+}
+.homepage-div p{
+  position: absolute;
+  top: 70%;
+  right: 10%;
+  cursor: pointer;
+}
+.homepage-div p:hover{
+  background-color: whitesmoke;
+  color: black;
+  text-decoration: underline;
+}
+.image-config{
+  height: 450px;
+  object-fit: cover;
 }
