@@ -4,12 +4,17 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Footer from './Footer';
 
+type User = {
+    userName: string,
+    password: string
+}
+
 const EmpLogin = () => {
     const Navigate = useNavigate();
 
-    const [details, setDetails] = useState({
-        userName:String,
-        password:String,
+    const [details, setDetails] = useState<User>({
+        userName: '',
+        password: '',
     });
 
     const handleDataChange = (e:  React.ChangeEvent<HTMLInputElement>) => {

@@ -4,16 +4,25 @@ import img from '../images/bg-image.jpg';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+type User = {
+    name: string,
+    dob: string,
+    phone: number,
+    email: string,
+    userName: string,
+    password: string
+}
+
 const Signup = () => {
     const Navigate = useNavigate();
 
-    const [details, setDetails] = useState({
-        name:String,
-        dob:String,
-        phone:Number,
-        email:String,
-        userName:String,
-        password:String,
+    const [details, setDetails] = useState<User>({
+        name: '',
+        dob: '',
+        phone: 0,
+        email: '',
+        userName: '',
+        password: '',
     });
 
     const handleChange = (e:  React.ChangeEvent<HTMLInputElement>) => {

@@ -3,12 +3,17 @@ import img from '../images/bg-image.jpg';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+type User = {
+  userName: string,
+  password: string
+}
+
 const Body = () => {
   const Navigate = useNavigate();
 
-  const [details, setDetails] = useState({
-    userName:String,
-    password:String,
+  const [details, setDetails] = useState<User>({
+    userName: '',
+    password: '',
   });
 
   const handleChange = (e:  React.ChangeEvent<HTMLInputElement>) => {
