@@ -1,38 +1,181 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.header-div{
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  padding-inline: 10px;
+  justify-content: space-between;
+  height: 100px;
+  background-color: rgb(19, 19, 19);
   color: white;
 }
-
-.App-link {
-  color: #61dafb;
+.p-style{
+  display: flex;
+  padding-top: 10px;
+  gap: 1.5rem;
+  p{
+    padding: 12px;
+    font-weight: bold;
+  }
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.title-div{
+  font-size: 1.7rem;
+  font-weight: 900;
+  font-style: italic;
+}
+img{
+  width: 100%;
+  object-fit: cover;
+}
+figure{
+  margin: 0;
+  position: relative;
+}
+.caption-p{
+  position: absolute;
+  right: 4%;
+  top: 65%;
+  color: white;
+  font-size: 2.5rem;
+  font-style: italic;
+  font-weight: bolder;
+}
+
+.logo-div{
+  border-bottom: 3px solid black;
+  font-size: 1.5rem;
+  font-style: italic;
+  font-weight: bolder;
+  padding-left: 15px;
+}
+.body-div{
+  position: relative;
+}
+.login-div{
+  position: absolute;
+  top: 30%;
+  right: 40%;
+  height: 380px;
+  gap: 0.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: rgba(246, 238, 238, 0.468);
+  border-radius: 10px;
+  div{
+    margin: 15px;
+    display: flex;
+    column-gap: 20px;
   }
-  to {
-    transform: rotate(360deg);
+}
+#login-btn{
+  width: 100px;
+  margin-left: 100px;
+  border: none;
+  padding: 15px;
+  background-color: rgb(173, 173, 173);
+  font-weight: bold;
+  border-radius: 10px;
+  margin-block: 10px;
+}
+label{
+  font-weight: bold;
+}
+input{
+  border: none;
+  padding: 15px;
+  border-radius: 10px;
+}
+.social-div{
+  display: flex;
+  justify-content: space-between;
+  padding-inline: 35px;
+}
+
+.homepage-div{
+  height: 500px;
+  background-color: black;
+  color: white;
+  font-size: 2rem;
+  font-style: italic;
+  font-weight: bolder;
+  text-align: center;
+  position: relative;
+  
+}
+.signup-div p{
+  margin-left: 20px;
+}
+.span{
+  font-weight: 700;
+  color: rgb(19, 19, 150);
+}
+.span:hover{
+  text-decoration: underline;
+}
+.signup-div{
+  position: relative;
+  border-bottom: 2px solid black;
+}
+.signup-form{
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  background-color: rgba(246, 238, 238, 0.468);
+  flex-direction: column;
+  top: 15%;
+  right: 40%;
+  height: 450px;
+  width: 350px;
+  border-radius: 20px;
+div{
+  margin-block: 10px;
+}
+label {
+  padding-inline: 10px;
+}
+button{
+  margin-left: 70px;
+  border-radius: 25px;
+  padding:20px 60px;
+  border: none;
+  background-color: rgb(19, 19, 150);
+  color: whitesmoke;
+}
+}
+.emp-login{
+  border: none;
+  background-color: rgb(173, 173, 173);
+  color: black;
+  padding: 10px 60px;
+  border-radius: 20px;
+  margin-left: 25px;
+  font-weight: 700;
+}
+.logout-btn{
+  position: absolute;
+  right: 10%;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  background-color: rgb(246, 231, 231);
+}
+.emplogin-div{
+  display: flex;
+  flex-direction: column;
+  form{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 25%;
+    left: 40%;
+    height: 300px;
+    width: 300px;
+    gap: .5rem;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(99, 96, 96, 0.581);
+    input{
+      width: 200px;
+    }
   }
 }
