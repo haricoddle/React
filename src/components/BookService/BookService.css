@@ -1,0 +1,29 @@
+.booking-div{
+    background-image: url(../../images/bike-service-img.jpg);
+    background-size: cover;
+    display: flex;
+    background-attachment: fixed;
+    justify-content: center;
+    align-items: center;
+    height: 600px;
+}
+form{
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgba(80, 83, 83, 0.788);
+    width: 600px;
+    height: 400px;
+    button{
+        padding: 10px 35px;
+        border: none;
+        border-radius: 15px;
+        background-color: rgb(23, 23, 176);
+    }
+}
+.message-area{
+    color: rgba(138, 12, 12, 0.978);
+    font-size: 1.5rem;
+}

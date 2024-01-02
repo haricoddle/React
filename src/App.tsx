@@ -4,9 +4,9 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import EmpLogin from './components/EmpLogin';
 import EmpHomePage from './pages/EmpHomepage';
-import Accessories from './components/Accessories';
-import Vehicles from './components/Vehicles';
-import BookService from './components/BookService';
+import Accessories from './components/Accessories/Accessories';
+import Vehicles from './components/Vehicles/Vehicles';
+import BookService from './components/BookService/BookService';
 import { Route, Routes } from 'react-router-dom';
 
 function App() {

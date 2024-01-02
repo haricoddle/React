@@ -17,7 +17,7 @@ const EmpLogin = () => {
         password: '',
     });
 
-    const handleDataChange = (e:  React.ChangeEvent<HTMLInputElement>) => {
+    const handleDataChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setDetails({ ...details, [e.target.name]: e.target.value })
     }
 
@@ -43,14 +43,14 @@ const EmpLogin = () => {
 
                 <div className='emplogin-div'>
                     <form onSubmit={handleLogin}>
-                        
-                           
-                            <label htmlFor="userName">Username</label>
-                            <input type="text" name="userName" id="username" placeholder='Username' onChange={handleDataChange} />
-                        
-                            <label htmlFor="password">Password</label>
-                            <input type="password" name="password" id="password" placeholder='Password' onChange={handleDataChange} />
-                        
+
+
+                        <label htmlFor="userName">Username</label>
+                        <input type="text" name="userName" id="username" placeholder='Username' onChange={handleDataChange} />
+
+                        <label htmlFor="password">Password</label>
+                        <input type="password" name="password" id="password" placeholder='Password' onChange={handleDataChange} />
+
 
                         <button id='login-btn'>LOGIN</button>
                     </form>

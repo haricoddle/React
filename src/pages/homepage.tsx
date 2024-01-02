@@ -2,8 +2,6 @@ import { useNavigate } from "react-router-dom";
 import img1 from '../images/show-bike-img.jpg'
 import img2 from '../images/accessories-img.jpg'
 import img3 from '../images/bike-service-img.jpg'
-// import './Hompage.css'
-
 
 const HomePage = () => {
     const Navigate = useNavigate();

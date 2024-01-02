@@ -1,0 +1,43 @@
+.accessories-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url(../../images/accessories-img.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+.accessory-items{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 600px;
+    margin-block: 10px;
+    background-color: rgba(99, 98, 96, 0.866);
+    font-size: 1.2rem;
+    font-weight: bold;
+    font-style: italic;
+    img{
+        height: 300px;
+        width: 350px;
+        object-fit: cover;
+        padding-top: 10px;
+    }
+    button{
+        padding: 10px 20px;
+        border: none;
+        border-radius: 15px;
+        background-color: rgb(25, 25, 194);
+        margin-bottom: 15px;
+    }
+}
+.logout-btn{
+    position: absolute;
+    top: 35px;
+    right: 15%;
+    float: left;
+}

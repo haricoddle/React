@@ -209,3 +209,7 @@ button{
   height: 450px;
   object-fit: cover;
 }
+
+.header-nav-button{
+  cursor: pointer;
+}
