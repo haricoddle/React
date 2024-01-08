@@ -1,6 +1,9 @@
 import { useNavigate } from "react-router-dom"
+import { useSelector } from "react-redux";
 
 const Header = () => {
+  const userId = useSelector((state: any) => state.user.id)
+
     const Navigate = useNavigate();
     const handleMotorcycle = () => {
         Navigate('/vehicles')
@@ -11,6 +14,9 @@ const Header = () => {
     const handlehome = () => {
         Navigate('/home')
     }
+
+    console.log(userId);
+
     return (
         <div>
             <header>

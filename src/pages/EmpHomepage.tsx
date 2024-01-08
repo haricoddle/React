@@ -15,9 +15,9 @@ const EmpHomePage = () => {
     return (
         <div>
             <Header />
+            <button id="logout-btn" onClick={handleLogout}>Logout</button>
             <div className="homepage-div">
-                <button className="logout-btn" onClick={handleLogout}>Logout</button>
-                <p className="log-mesg">Logged in successfully as Employee</p>
+                <p id="log-mesg">Logged in successfully as Employee</p>
             </div>
             <Footer />
         </div>

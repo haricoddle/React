@@ -1,8 +1,9 @@
 import React, { FormEvent, useState } from 'react';
-import img from '../images/bg-image.jpg';
+import img from '../../images/bg-image.jpg';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Footer from './Footer';
+import Footer from '../Footer';
+import './EmpLogin.css'
 
 type User = {
     userName: string,

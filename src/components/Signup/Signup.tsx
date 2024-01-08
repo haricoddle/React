@@ -1,8 +1,9 @@
 import React, { FormEvent, useState } from 'react';
-import Footer from './Footer';
-import img from '../images/bg-image.jpg';
+import Footer from '../Footer';
+import img from '../../images/bg-image.jpg';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import './Signup.css'
 
 type User = {
     name: string,
@@ -34,7 +35,6 @@ const Signup = () => {
         event.preventDefault();
         axios.post(`${process.env.REACT_APP_URL}/customer/register`, details)
             .then((res) => {
-                console.log(res)
                 if (res.status === 200) {
                     alert('New user Created');
                     Navigate('/')

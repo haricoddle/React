@@ -24,11 +24,11 @@ const HomePage = () => {
         Navigate('/bookService')
     }
     return (
-            <div className="homepage-div">
-                <button onClick={handleLogout}>Logout</button>
-                <div className="log-mesg">
+        <>
+        <button className='logout-btn' onClick={handleLogout}>Logout</button><div className="user-homepage-div">
+            <div className="log-mesg">
                 <figure>
-                    <img  className='show-bike-img image-config' src={img1} alt="Show bike" />
+                    <img className='show-bike-img image-config' src={img1} alt="Show bike" />
                     <p onClick={handleShowVehicle} onKeyDown={handleShowVehicle}> Show vehicles <i className="fa fa-arrow-circle-right"></i></p>
                 </figure>
                 <figure>
@@ -36,12 +36,13 @@ const HomePage = () => {
                     <p onClick={handleAccessories} onKeyDown={handleAccessories}>Show accessories <i className="fa fa-arrow-circle-right"></i></p>
                 </figure>
                 <figure>
-                    <img className="bike-service image-config" src={img3} alt="Bike service"/>
+                    <img className="bike-service image-config" src={img3} alt="Bike service" />
                     <p onClick={handleServiceBooking} onKeyDown={handleServiceBooking}> Book service <i className="fa fa-arrow-circle-right"></i></p>
 
                 </figure>
-                </div>
             </div>
+        </div>
+        </>
     )
 }
 

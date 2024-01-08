@@ -1,7 +1,10 @@
 import React, { FormEvent, useState } from 'react';
-import img from '../images/bg-image.jpg';
+import img from '../../images/bg-image.jpg';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { setUserDetails }  from '../../Redux/UserSlice';
+import './Body.css';
 
 type User = {
   userName: string,
@@ -9,6 +12,7 @@ type User = {
 }
 
 const Body = () => {
+  const dispatch = useDispatch();
   const Navigate = useNavigate();
 
   const [details, setDetails] = useState<User>({
@@ -30,12 +34,17 @@ const Body = () => {
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    console.log(details);
     axios.post(`${process.env.REACT_APP_URL}/customer/login`, details)
       .then((res) => {
         console.log(res.data.token);
         if (res.status === 200) {
           localStorage.setItem('token', res.data.token);
+          dispatch(setUserDetails({
+            id: res.data.data.id,
+            name: res.data.data.name,
+            roles: res.data.data.roles,
+            userName: res.data.data.username
+          }))
           Navigate('/home')
         }
       })
@@ -50,7 +59,7 @@ const Body = () => {
         <p className='caption-p'>START YOUR <br /> RIDE WITH US....</p>
       </figure>
 
-      <div className='login-div'>
+      <div className='user-login-div'>
         <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="userName">Username</label>

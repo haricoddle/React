@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './Vehicles.css'
 import Header from '../Header';
 import Footer from '../Footer';
+import { useNavigate } from 'react-router-dom';
+import './Vehicles.css'
 
 const Vehicles = () => {
+    const Navigate = useNavigate();
     const [vehicleData, setVehicleData] = useState([]);
 
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_URL}/vehicle/allVehicles`)
             .then((res) => {
                 const data = res.data.data;
-                console.log(res.data.data)
                 setVehicleData(data);
             })
             .catch((error) => {
@@ -20,7 +21,8 @@ const Vehicles = () => {
     }, []);
 
     function handleLogout() {
-        localStorage.removeItem('token')
+        localStorage.removeItem('token');
+        Navigate('/');
     }
 
     return (

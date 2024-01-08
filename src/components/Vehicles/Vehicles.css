@@ -38,10 +38,4 @@
         font-size: 1rem;
     }
   }
-  .logout-btn{
-    border: none;
-    padding: 10px 25px;
-    border-radius: 15px;
-    background-color: rgb(154, 154, 187);
-    cursor: pointer;
-  }
+  

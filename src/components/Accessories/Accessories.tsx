@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
-import './Accessories.css'
 import Header from '../Header';
 import { useNavigate } from 'react-router-dom';
+import './Accessories.css'
+
 const Accessories = () => {
   const Navigate = useNavigate();
   const [accessoriesData, setAccessoriesData] = useState([]);

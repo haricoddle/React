@@ -1,5 +1,5 @@
 import Header from "./Header";
-import Body from "./Body";
+import Body from "./LoginBody/Body";
 import Footer from "./Footer";
 
 const Login = () => {

@@ -6,6 +6,7 @@
   background-color: rgb(19, 19, 19);
   color: white;
 }
+
 .p-style{
   display: flex;
   padding-top: 10px;
@@ -30,15 +31,6 @@ figure{
   margin: 0;
   position: relative;
 }
-.caption-p{
-  position: absolute;
-  right: 4%;
-  top: 65%;
-  color: white;
-  font-size: 2.5rem;
-  font-style: italic;
-  font-weight: bolder;
-}
 
 .logo-div{
   border-bottom: 3px solid black;
@@ -47,39 +39,10 @@ figure{
   font-weight: bolder;
   padding-left: 15px;
 }
-.body-div{
-  position: relative;
-}
-.login-div{
-  position: absolute;
-  top: 30%;
-  right: 40%;
-  height: 380px;
-  gap: 0.2rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background-color: rgba(246, 238, 238, 0.468);
-  border-radius: 10px;
-  div{
-    margin: 15px;
-    display: flex;
-    column-gap: 20px;
-  }
-}
-#login-btn{
-  width: 100px;
-  margin-left: 100px;
-  border: none;
-  padding: 15px;
-  background-color: rgb(173, 173, 173);
-  font-weight: bold;
-  border-radius: 10px;
-  margin-block: 10px;
-  cursor: pointer;
-}
+
 label{
   font-weight: bold;
+  padding-inline: 10px;
 }
 input{
   border: none;
@@ -91,90 +54,9 @@ input{
   justify-content: space-between;
   padding-inline: 35px;
 }
-.signup-div p{
-  margin-left: 20px;
-}
-.span{
-  font-weight: 700;
-  color: rgb(19, 19, 150);
-  cursor: pointer;
-}
-.span:hover{
-  text-decoration: underline;
-}
-.signup-div{
-  position: relative;
-  border-bottom: 2px solid black;
-}
-.signup-form{
-  position: absolute;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  background-color: rgba(246, 238, 238, 0.468);
-  flex-direction: column;
-  top: 15%;
-  right: 40%;
-  height: 450px;
-  width: 350px;
-  border-radius: 20px;
-div{
-  margin-block: 10px;
-}
-label {
-  padding-inline: 10px;
-}
-button{
-  margin-left: 70px;
-  border-radius: 25px;
-  padding:20px 60px;
-  border: none;
-  background-color: rgb(19, 19, 150);
-  color: whitesmoke;
-  cursor: pointer;
-}
-}
-.emp-login{
-  border: none;
-  background-color: rgb(173, 173, 173);
-  color: black;
-  padding: 10px 60px;
-  border-radius: 20px;
-  margin-left: 25px;
-  font-weight: 700;
-}
-.logout-btn{
-  position: absolute;
-  right: 10%;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 10px;
-  background-color: rgb(246, 231, 231);
-  cursor: pointer;
-}
-.emplogin-div{
-  display: flex;
-  flex-direction: column;
-  form{
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 25%;
-    left: 40%;
-    height: 300px;
-    width: 300px;
-    gap: .5rem;
-    border-radius: 15px;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(99, 96, 96, 0.581);
-    input{
-      width: 200px;
-    }
-  }
-}
 
-.homepage-div button{
+.homepage-div{ 
+  button{
   padding: 10px 15px;
   border: none;
   border-radius: 10px;
@@ -185,7 +67,8 @@ button{
   right: 12%;
   top: -5%;
 }
-.homepage-div{
+}
+.user-homepage-div{
   background-color: black;
   color: white;
   font-size: 2rem;
@@ -194,13 +77,13 @@ button{
   text-align: center;
   position: relative;
 }
-.homepage-div p{
+.user-homepage-div p{
   position: absolute;
   top: 70%;
   right: 10%;
   cursor: pointer;
 }
-.homepage-div p:hover{
+.user-homepage-div p:hover{
   background-color: whitesmoke;
   color: black;
   text-decoration: underline;
@@ -212,4 +95,23 @@ button{
 
 .header-nav-button{
   cursor: pointer;
+}
+
+#log-mesg{
+  color: black;
+  font-size: 2rem;
+  font-style: italic;
+  font-weight: bolder;
+  text-align: center;
+}
+.logout-btn{
+  border: none;
+  padding: 10px 25px;
+  border-radius: 15px;
+  background-color: rgb(246, 231, 231);
+  cursor: pointer;
+  z-index: 5;
+  top: 5.2%;
+  position: absolute;
+  right: 14%;
 }

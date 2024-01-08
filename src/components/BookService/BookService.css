@@ -7,7 +7,7 @@
     align-items: center;
     height: 600px;
 }
-form{
+.service-form{
     display: flex;
     gap: 2rem;
     justify-content: center;
@@ -24,6 +24,6 @@ form{
     }
 }
 .message-area{
-    color: rgba(138, 12, 12, 0.978);
+    color: rgba(79, 248, 1, 0.978);
     font-size: 1.5rem;
 }

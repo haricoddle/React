@@ -1,8 +1,8 @@
 import './App.css';
 import Head from './components/Home';
 import Login from './components/Login';
-import Signup from './components/Signup';
-import EmpLogin from './components/EmpLogin';
+import Signup from './components/Signup/Signup';
+import EmpLogin from './components/EmpLogin/EmpLogin';
 import EmpHomePage from './pages/EmpHomepage';
 import Accessories from './components/Accessories/Accessories';
 import Vehicles from './components/Vehicles/Vehicles';
