@@ -1,0 +1,21 @@
+.emplogin-div{
+    display: flex;
+    flex-direction: column;
+    form{
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 25%;
+      left: 40%;
+      height: 300px;
+      width: 300px;
+      gap: .5rem;
+      border-radius: 15px;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(99, 96, 96, 0.581);
+      input{
+        width: 200px;
+      }
+    }
+  }
