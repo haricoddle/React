@@ -26,7 +26,7 @@ const Signup = () => {
         password: '',
     });
 
-    const handleChange = (e:  React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setDetails({ ...details, [e.target.name]: e.target.value })
     }
 

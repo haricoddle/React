@@ -6,9 +6,9 @@ const Home = () => {
 
     return (
         <>
-        <Header/>
-        <HomePage />
-        <Footer />
+            <Header />
+            <HomePage />
+            <Footer />
         </>
     )
 }

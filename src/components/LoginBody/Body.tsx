@@ -3,7 +3,7 @@ import img from '../../images/bg-image.jpg';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { setUserDetails }  from '../../Redux/UserSlice';
+import { setUserDetails } from '../../Redux/UserSlice';
 import './Body.css';
 
 type User = {
@@ -36,7 +36,6 @@ const Body = () => {
     event.preventDefault();
     axios.post(`${process.env.REACT_APP_URL}/customer/login`, details)
       .then((res) => {
-        console.log(res.data.token);
         if (res.status === 200) {
           localStorage.setItem('token', res.data.token);
           dispatch(setUserDetails({

@@ -5,9 +5,9 @@ import Footer from "./Footer";
 const Login = () => {
     return (
         <>
-        <Header />
-        <Body />
-        <Footer />
+            <Header />
+            <Body />
+            <Footer />
         </>
     )
 }

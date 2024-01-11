@@ -25,24 +25,29 @@ const Vehicles = () => {
         Navigate('/');
     }
 
+    function handleCart() {
+        Navigate('/cart');
+    }
+
     return (
         <>
-        <Header />
-        <button className='logout-btn' onClick={handleLogout}>Logout</button>
-        <div className='vehicle-container'>
-            {vehicleData.map((data: any) => (
-                <div key={data?.index}>
-                    <div key={data.id} className='vehicle-div'>
-                        <p>Model : - {data.model_name}</p>
-                        <p>CC : -{data.cc}</p>
-                        <p>Price (Ex-Showroom) : - {data.price}</p>
-                        <img src={`http://localhost:3001/profile/${data.image_url}`} alt="vehicles" className='vehicle-img' />
-                        <button> Show more</button>
+            <Header />
+            <i className="fa-solid fa-cart-shopping" onClick={handleCart} onKeyDown={handleCart}></i>
+            <button className='logout-btn' onClick={handleLogout}>Logout</button>
+            <div className='vehicle-container'>
+                {vehicleData.map((data: any) => (
+                    <div key={data?.index}>
+                        <div key={data.id} className='vehicle-div'>
+                            <p>Model : - {data.model_name}</p>
+                            <p>CC : -{data.cc}</p>
+                            <p>Price (Ex-Showroom) : - {data.price}</p>
+                            <img src={`http://localhost:3001/profile/${data.image_url}`} alt="vehicles" className='vehicle-img' />
+                            <button> Show more</button>
+                        </div>
                     </div>
-                </div>
-            ))}
-        </div>
-        <Footer />
+                ))}
+            </div>
+            <Footer />
         </>
     );
 };

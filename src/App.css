@@ -115,3 +115,11 @@ input{
   position: absolute;
   right: 14%;
 }
+.fa-cart-shopping{
+  position: absolute;
+  right: 10%;
+  top: 6.2%;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
