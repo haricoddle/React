@@ -1,0 +1,13 @@
+.vehicle-container{
+    height: 600px;
+}
+.add-vehicle-container{  
+    background-color: rgba(128, 128, 128, 0.637);
+    form{
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    }
+}

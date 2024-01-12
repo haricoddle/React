@@ -1,0 +1,40 @@
+.main-booking-div{
+    position: relative;
+}
+.booking-form{
+    position: absolute;
+    display: flex;
+    background-color: rgba(128, 128, 128, 0.718);
+    top: 20%;
+    left: 35%;
+    flex-direction: column;
+    width: 500px;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+    label{
+        padding-top: 20px;
+    }
+}
+#vehicle{
+    margin-block: 10px;
+    padding: 10px 40px;
+    border: none;
+    border-radius: 10px;
+}
+.booking-submit-btn{
+    margin-block: 15px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+}
+#error-mesg-area{
+    color: rgba(244, 68, 68, 0.905);
+    font-size: 1.2rem;
+}
+#success-mesg-area{
+    color: rgb(185, 239, 172);
+    padding-inline: 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
