@@ -35,7 +35,11 @@ const BookService = () => {
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     console.log(details);
-    axios.post(`${process.env.REACT_APP_URL}/service/booking`, details)
+    axios.post(`${process.env.REACT_APP_URL}/service/booking`, details, {
+      headers: {
+          authorization: `bearer ${localStorage.getItem('token')}`
+      }
+  })
       .then((res: any) => {
         console.log(res)
         if (res.status === 200) {

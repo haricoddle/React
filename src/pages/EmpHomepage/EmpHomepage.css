@@ -1,0 +1,53 @@
+.homepage-container{
+    position: relative;
+}
+.homepage-div{
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    padding-inline: 16px;
+    display: grid;
+    justify-content: space-evenly;
+    gap: 2rem;
+    grid-template-columns: auto auto auto;
+   
+}
+.grid-style{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-direction: column;
+    height: 300px;
+    width: 400px;
+    background-color: rgba(128, 128, 128, 0.677);
+}
+.emp-header{
+  display: flex;
+  padding-inline: 16px;
+  justify-content: space-between;
+  height: 100px;
+  background-color: rgb(19, 19, 19);
+  color: white;
+  font-size: 1.7rem;
+  font-weight: 900;
+  font-style: italic;
+}
+.emp-header p{
+    cursor: pointer;
+    }
+.emp-header button {
+    padding: 12px 25px;
+}
+.option-text-style{
+    font-size: 2rem;
+    color: white;
+    font-style: italic;
+    font-weight: bolder;
+}
+.option-btn-style{
+    padding: 15px 30px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}

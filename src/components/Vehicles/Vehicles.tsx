@@ -10,7 +10,11 @@ const Vehicles = () => {
     const [vehicleData, setVehicleData] = useState([]);
 
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_URL}/vehicle/allVehicles`)
+        axios.get(`${process.env.REACT_APP_URL}/vehicle/allVehicles`,{
+            headers: {
+                authorization: `bearer ${localStorage.getItem('token')}`
+            }
+        })
             .then((res) => {
                 const data = res.data.data;
                 setVehicleData(data);

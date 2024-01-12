@@ -13,7 +13,11 @@ const Cart = () => {
   const [cartData, setCartData] = useState([]);
 
   useEffect(() => {
-    axios.post(`${process.env.REACT_APP_URL}/cart/showCart`, { customerId })
+    axios.post(`${process.env.REACT_APP_URL}/cart/showCart`, { customerId },{
+      headers: {
+          authorization: `bearer ${localStorage.getItem('token')}`
+      }
+  })
       .then((res) => {
         const data = res.data.data;
         setCartData(data);

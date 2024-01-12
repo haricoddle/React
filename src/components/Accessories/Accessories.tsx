@@ -24,20 +24,26 @@ const Accessories = () => {
   }
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_URL}/parts/showAll`)
+    axios.get(`${process.env.REACT_APP_URL}/parts/showAll`,{
+      headers: { 
+        authorization: `bearer ${localStorage.getItem('token')}` 
+      }
+    })
       .then((res) => {
         const data = res.data.data;
         setAccessoriesData(data);
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error); 
       });
   }, []);
 
   function handleAddToCart(productId: string) {
     console.log(productId);
     axios.post(`${process.env.REACT_APP_URL}/cart/addToCart`, { customerId, productId }, {
-      headers: { authorization: `bearer ${localStorage.getItem('token')}` }
+      headers: { 
+        authorization: `bearer ${localStorage.getItem('token')}` 
+      }
     })
       .then((res) => {
         console.log(res);
@@ -50,7 +56,7 @@ const Accessories = () => {
       <Header />
       <i className="fa-solid fa-cart-shopping" onClick={handlecart} onKeyDown={handlecart}></i>
       <button className='logout-btn' onClick={handleLogout}>Log out</button>
-      <div className="accessories-container">
+      <div className="accessories-container" id='container'>
         {accessoriesData.map((data: any) => (
           <div key={data?.id} className='accessory-items'>
             <img src={`http://localhost:3001/profile/${data.image_url}`} alt="Accessories" />

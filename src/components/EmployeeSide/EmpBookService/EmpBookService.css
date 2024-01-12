@@ -1,0 +1,57 @@
+.service-booking-container{
+    background-image: url(../../../images/show-bike-img.jpg);
+    display: flex;
+    flex-direction: column;
+}
+button{
+    margin-block: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+}
+.booking-details-container{
+    background-color: rgba(128, 128, 128, 0.688);
+    margin: 25px 16px;
+    p{
+        font-size: 1.1rem;
+        font-weight: 1rem;
+        padding-block: 5px;
+    }
+}
+#show-service-bookings{
+    display: grid;
+    gap: 1.2rem;
+   grid-template-columns: auto auto auto;
+   margin: 10px;
+}
+.booking-data{
+    background-color: rgba(187, 183, 183, 0.793);
+    text-align: center;
+   border: 2px solid black;
+
+}
+
+.edit-booking-container{
+    background-color: rgba(154, 152, 152, 0.664);
+    margin-inline: 16px;
+    margin-block: 16px;
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    justify-content: center;
+    align-items: center;
+    p{
+        font-style: italic;
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+    input ,label, button{
+        margin-top: 10px;
+        width: 100px;
+    }
+}
+.headings{
+        font-style: italic;
+        font-size: 1.2rem;
+        font-weight: bold;
+}

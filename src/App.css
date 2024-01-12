@@ -55,19 +55,6 @@ input{
   padding-inline: 35px;
 }
 
-.homepage-div{ 
-  button{
-  padding: 10px 15px;
-  border: none;
-  border-radius: 10px;
-  margin-right: 20px;
-  cursor: pointer;
-  position: absolute;
-  z-index: 2;
-  right: 12%;
-  top: -5%;
-}
-}
 .user-homepage-div{
   background-color: black;
   color: white;
@@ -97,13 +84,6 @@ input{
   cursor: pointer;
 }
 
-#log-mesg{
-  color: black;
-  font-size: 2rem;
-  font-style: italic;
-  font-weight: bolder;
-  text-align: center;
-}
 .logout-btn{
   border: none;
   padding: 10px 25px;
@@ -115,6 +95,7 @@ input{
   position: absolute;
   right: 14%;
 }
+
 .fa-cart-shopping{
   position: absolute;
   right: 10%;
@@ -122,4 +103,11 @@ input{
   color: white;
   font-size: 1.2rem;
   cursor: pointer;
+}
+
+.background-image-style{
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }

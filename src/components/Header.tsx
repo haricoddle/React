@@ -3,14 +3,39 @@ import { useNavigate } from "react-router-dom"
 const Header = () => {
 
     const Navigate = useNavigate();
-    const handleMotorcycle = () => {
-        Navigate('/vehicles')
+
+    function handleMotorcycle() {
+        if (localStorage.getItem('token')) {
+            Navigate('/vehicles');
+        } else {
+            alert('Please Login before using the services');
+            Navigate('/')
+        }
     }
-    const handleAccessories = () => {
-        Navigate('/accessories')
+    function handleAccessories() {
+        if (localStorage.getItem('token')) {
+            Navigate('/accessories');
+        } else {
+            alert('Please Login before using the services');
+            Navigate('/')
+        }
     }
-    const handlehome = () => {
-        Navigate('/home')
+    function handlehome() {
+        if (localStorage.getItem('token')) {
+            Navigate('/home');
+        } else {
+            alert('Please Login before using the services');
+            Navigate('/')
+        }
+    }
+
+    function handleBooking() {
+        if (localStorage.getItem('token')) {
+            Navigate('/bookings');
+        } else {
+            alert('Please Login before using the services');
+            Navigate('/')
+        }
     }
 
     return (
@@ -25,7 +50,7 @@ const Header = () => {
                         <p onClick={handleAccessories} onKeyDown={handleAccessories} className="header-nav-button">ACCESSORIES</p>
                     </div>
                     <div className='users-div p-style'>
-                        <p>BOOK NOW</p>
+                        <p onClick={handleBooking} onKeyDown={handleBooking} className="header-nav-button">BOOK NOW</p>
                     </div>
                 </div>
             </header>
