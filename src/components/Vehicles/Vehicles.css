@@ -1,0 +1,40 @@
+.vehicle-container {
+    background-image: url(../../images/show-bike-img.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: auto auto ;
+    padding: 10px 16px;
+  }
+  
+  .vehicle-div{
+    gap: 1rem;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: rgba(148, 146, 146, 0.575);
+    font-size: 1.2rem;
+    font-weight: bold;
+    font-style: italic;
+    color: rgba(35, 52, 52, 0.922);
+    img{
+      height: 300px;
+      width: 410px;
+      object-fit: cover;
+    }
+    button{
+        margin-block: 10px;
+        background-color: rgb(33, 33, 239);
+        border: none;
+        padding: 10px 20px;
+        border-radius: 15px;
+        font-size: 1rem;
+    }
+  }
+  
