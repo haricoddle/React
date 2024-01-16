@@ -1,9 +1,21 @@
-import React from 'react'
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const HeaderHOC = () => {
-  return (
-    <div>HeaderHOC</div>
-  )
-}
+const withTokenCheck = (WrappedComponent: React.ComponentType) => {
+  return (props: any) => {
+    const Navigate = useNavigate();
 
-export default HeaderHOC
+    const handleAuth = (path: string) => {
+      if (localStorage.getItem('token')) {
+        Navigate(path);
+      } else {
+        alert('Please login before using the services');
+        Navigate('/');
+      }
+    };
+    return <WrappedComponent {...props} handleAuth={handleAuth} />
+
+  };
+};
+
+export default withTokenCheck;
