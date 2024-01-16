@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import Footer from '../../Footer'
 import EmpHeader from '../EmpHeader/EmpHeader'
-import axios from 'axios';
 import './EmpAccessories.css'
+import { apiRequest } from '../../../HelperFunction/helperFunction';
 
 type Items = {
   id: string,
@@ -38,31 +38,23 @@ const EmpAccessories = () => {
     setItemDetails({ ...itemDetails, [e.target.name]: e.target.value })
   }
 
-  function handleAddAccessory() {
-    axios.post(`${process.env.REACT_APP_URL}/parts/addParts`, details, {
-      headers: {
-        authorization: `bearer ${localStorage.getItem('token')}`
-      }
-    })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch(error => console.log(error));
-    console.log(details);
-
+  async function handleAddAccessory() {
+    try {
+      const res = await apiRequest(`${process.env.REACT_APP_URL}/parts/addParts`,'post', details);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
 
-  function handleEditAccessory() {
-    axios.put(`${process.env.REACT_APP_URL}/parts/updatePartQuery`, itemDetails, {
-      headers: {
-        authorization: `bearer ${localStorage.getItem('token')}`
-      }
-    })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch(error => console.log(error));
+  async function handleEditAccessory() {
+    try {
+      const res = await apiRequest(`${process.env.REACT_APP_URL}/parts/updatePartQuery`,'put', itemDetails);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
     console.log(itemDetails);
   }
 
@@ -78,14 +70,14 @@ const EmpAccessories = () => {
               <label htmlFor="accessoryId">Accessory id</label>
               <input type="text" name="accessoryId" placeholder='Accessory Id' onChange={handleItemChange} />
 
-              <label htmlFor="name">Accessory Name</label>
-              <input type="text" name='name' placeholder='Accessory Name' onChange={handleItemChange} />
+              <label htmlFor="name">Accessory Name*</label>
+              <input type="text" name='name' placeholder='Accessory Name' onChange={handleItemChange} required/>
 
-              <label htmlFor="price">Price</label>
-              <input type="text" name='price' placeholder='Price' onChange={handleItemChange} />
+              <label htmlFor="price">Price*</label>
+              <input type="text" name='price' placeholder='Price' onChange={handleItemChange} required/>
 
-              <label htmlFor="stock">Stock Availabele</label>
-              <input type="text" name='stock' placeholder='Stock' onChange={handleItemChange} />
+              <label htmlFor="stock">Stock Availabele*</label>
+              <input type="text" name='stock' placeholder='Stock' onChange={handleItemChange} required/>
 
             </form>
             <button onClick={handleAddAccessory}>Add a Accessory</button>
@@ -105,10 +97,6 @@ const EmpAccessories = () => {
             <button onClick={handleEditAccessory}>Edit a Accessory</button>
           </div>
         </div>
-
-        {/* <div>
-          <button onClick={handleDeleteAccessory}>delete a Accessory</button>
-        </div> */}
       </div><Footer></Footer></>
   )
 }

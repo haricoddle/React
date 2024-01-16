@@ -1,27 +1,36 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import Header from '../Header';
 import Footer from '../Footer';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { apiRequest } from '../../HelperFunction/helperFunction';
 import './Vehicles.css'
+import { AppDispatch } from '../../Redux/Store';
+import { setVehicleDetails } from '../../Redux/VehicleSlice';
 
 const Vehicles = () => {
     const Navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
+
     const [vehicleData, setVehicleData] = useState([]);
+    const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_URL}/vehicle/allVehicles`,{
-            headers: {
-                authorization: `bearer ${localStorage.getItem('token')}`
-            }
-        })
-            .then((res) => {
+        setLoading(true);
+        const fetchData = async () => {
+            try {
+                const res = await apiRequest(`${process.env.REACT_APP_URL}/vehicle/allVehicles`, 'get');
                 const data = res.data.data;
                 setVehicleData(data);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+                dispatch(setVehicleDetails(data));
+                console.log(res);
+            } catch (error) {
+                console.log(error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchData();
     }, []);
 
     function handleLogout() {
@@ -30,7 +39,9 @@ const Vehicles = () => {
     }
 
     function handleCart() {
-        Navigate('/cart');
+        if (localStorage.getItem('token')) {
+            Navigate('/cart');
+        }
     }
 
     return (
@@ -39,6 +50,7 @@ const Vehicles = () => {
             <i className="fa-solid fa-cart-shopping" onClick={handleCart} onKeyDown={handleCart}></i>
             <button className='logout-btn' onClick={handleLogout}>Logout</button>
             <div className='vehicle-container'>
+                {loading && <p className='loading-mesg'>Loading....</p>}
                 {vehicleData.map((data: any) => (
                     <div key={data?.index}>
                         <div key={data.id} className='vehicle-div'>

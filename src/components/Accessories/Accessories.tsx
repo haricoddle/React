@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
 import Header from '../Header';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import './Accessories.css'
+import Footer from '../Footer';
+import { apiRequest } from '../../HelperFunction/helperFunction';
 
 const Accessories = () => {
   const Navigate = useNavigate();
@@ -11,6 +12,7 @@ const Accessories = () => {
   const customerId = useSelector((state: any) => state.user.id);
 
   const [accessoriesData, setAccessoriesData] = useState([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   function handleLogout() {
     localStorage.removeItem('token');
@@ -24,32 +26,27 @@ const Accessories = () => {
   }
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_URL}/parts/showAll`,{
-      headers: { 
-        authorization: `bearer ${localStorage.getItem('token')}` 
+    setLoading(true);
+    const fetchData = async () => {
+      try {
+        const res = await apiRequest(`${process.env.REACT_APP_URL}/parts/showAll`, 'get');
+        setAccessoriesData(res.data.data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
       }
-    })
-      .then((res) => {
-        const data = res.data.data;
-        setAccessoriesData(data);
-      })
-      .catch((error) => {
-        console.log(error); 
-      });
+    }
+    fetchData();
   }, []);
 
-  function handleAddToCart(productId: string) {
-    console.log(productId);
-    axios.post(`${process.env.REACT_APP_URL}/cart/addToCart`, { customerId, productId }, {
-      headers: { 
-        authorization: `bearer ${localStorage.getItem('token')}` 
-      }
-    })
-      .then((res) => {
-        console.log(res);
-        alert('Item has been added to cart');
-      })
-      .catch(error => console.log(error));
+  async function handleAddToCart(productId: string) {
+    try {
+      const res = await apiRequest(`${process.env.REACT_APP_URL}/cart/addToCart`, 'post', { customerId, productId });
+      alert(res.data.data.message)
+    } catch (error) {
+      console.log(error);
+    }
   }
   return (
     <>
@@ -57,6 +54,7 @@ const Accessories = () => {
       <i className="fa-solid fa-cart-shopping" onClick={handlecart} onKeyDown={handlecart}></i>
       <button className='logout-btn' onClick={handleLogout}>Log out</button>
       <div className="accessories-container" id='container'>
+        {loading && <p className='loading-mesg'>Loading....</p>}
         {accessoriesData.map((data: any) => (
           <div key={data?.id} className='accessory-items'>
             <img src={`http://localhost:3001/profile/${data.image_url}`} alt="Accessories" />
@@ -67,6 +65,7 @@ const Accessories = () => {
           </div>
         ))}
       </div>
+      <Footer />
     </>
   )
 }

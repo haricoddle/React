@@ -20,22 +20,21 @@ button{
         padding-top: 5px;
     }
 }
-.delete-bookings{
-    margin-block: 16px;
-    margin-inline: 16px;
+
+.booking-details-div{
+    background-color: rgba(128, 128, 128, 0.759);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    grid-area: 1.1rem;
-    background-color: rgba(128, 128, 128, 0.764);
-    p{
-        font-size: 1.2rem;
-        font-style: italic;
-        font-weight: bold;
-    }
-}
-
-.booking-details-div{
+    width: 350px;
     margin-block: 16px;
+}
+#show-bookings{
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 2rem;
+}
+.edit-booking-status{
+    background-color: rgba(50, 50, 230, 0.762);
 }

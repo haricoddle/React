@@ -1,9 +1,9 @@
 import React, { FormEvent, useState } from 'react';
 import img from '../../images/bg-image.jpg';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import Footer from '../Footer';
 import './EmpLogin.css'
+import { apiRequest } from '../../HelperFunction/helperFunction';
 
 type User = {
     userName: string,
@@ -22,16 +22,15 @@ const EmpLogin = () => {
         setDetails({ ...details, [e.target.name]: e.target.value })
     }
 
-    function handleLogin(event: FormEvent<HTMLFormElement>) {
+    async function handleLogin(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        axios.post(`${process.env.REACT_APP_URL}/employee/empLogin`, details)
-            .then((res) => {
-                if (res.status === 200) {
-                    localStorage.setItem('token', res.data.token);
-                    Navigate('/empHome')
-                }
-            })
-            .catch(error => console.log(error));
+        try {
+            const res = await apiRequest(`${process.env.REACT_APP_URL}/employee/empLogin`, 'post', details);
+            localStorage.setItem('token', res.data.token);
+            Navigate('/empHome')
+        } catch (error) {
+            alert('try again')
+        }
     }
 
     return (
@@ -47,13 +46,14 @@ const EmpLogin = () => {
 
 
                         <label htmlFor="userName">Username</label>
-                        <input type="text" name="userName" id="username" placeholder='Username' onChange={handleDataChange} />
+                        <input type="text" name="userName" id="username" placeholder='Username' onChange={handleDataChange} required />
 
                         <label htmlFor="password">Password</label>
-                        <input type="password" name="password" id="password" placeholder='Password' onChange={handleDataChange} />
+                        <input type="password" name="password" id="password" placeholder='Password' onChange={handleDataChange} required />
 
 
                         <button id='login-btn'>LOGIN</button>
+
                     </form>
                 </div>
             </div><Footer />

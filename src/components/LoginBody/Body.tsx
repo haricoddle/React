@@ -1,10 +1,11 @@
 import React, { FormEvent, useState } from 'react';
 import img from '../../images/bg-image.jpg';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setUserDetails } from '../../Redux/UserSlice';
 import './Body.css';
+import { AppDispatch } from '../../Redux/Store';
+import { apiRequest } from '../../HelperFunction/helperFunction';
 
 type User = {
   userName: string,
@@ -12,7 +13,7 @@ type User = {
 }
 
 const Body = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const Navigate = useNavigate();
 
   const [details, setDetails] = useState<User>({
@@ -32,22 +33,21 @@ const Body = () => {
     Navigate('/emplogin')
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    axios.post(`${process.env.REACT_APP_URL}/customer/login`, details)
-      .then((res) => {
-        if (res.status === 200) {
-          localStorage.setItem('token', res.data.token);
-          dispatch(setUserDetails({
-            id: res.data.data.id,
-            name: res.data.data.name,
-            roles: res.data.data.roles,
-            userName: res.data.data.username
-          }))
-          Navigate('/home')
-        }
-      })
-      .catch(error => console.log(error));
+    try {
+      const res = await apiRequest(`${process.env.REACT_APP_URL}/customer/login`,'post', details);
+      localStorage.setItem('token', res.data.token);
+      dispatch(setUserDetails({
+                id: res.data.data.id,
+                name: res.data.data.name,
+                roles: res.data.data.roles,
+                userName: res.data.data.username
+              }))
+              Navigate('/home');
+    } catch (error) {
+      alert('try again');
+    }
   }
 
   return (
@@ -62,15 +62,17 @@ const Body = () => {
         <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="userName">Username</label>
-            <input type="text" name="userName" id="username" placeholder='Username' onChange={handleChange} />
+            <input type="text" name="userName" id="username" placeholder='Username' onChange={handleChange} required/>
           </div>
 
           <div>
             <label htmlFor="password">Password</label>
-            <input type="password" name="password" id="password" placeholder='Password' onChange={handleChange} />
+            <input type="password" name="password" id="password" placeholder='Password' onChange={handleChange} required/>
           </div>
 
           <button id='login-btn'>LOGIN</button>
+
+          <div id='login-err-mesg' className='err-mesg-style'></div>
         </form>
         <div className='signup-div'>
           <p>Don't have an account? <span className='span' id="signup-span" onClick={handleSignup} onKeyDown={handleSignup}> Sign up</span></p>

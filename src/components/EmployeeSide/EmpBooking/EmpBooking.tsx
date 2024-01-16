@@ -1,43 +1,33 @@
 import React, { useState } from 'react'
 import Footer from '../../Footer'
 import EmpHeader from '../EmpHeader/EmpHeader'
-import axios from 'axios';
 import './EmpBooking.css'
+import { apiRequest } from '../../../HelperFunction/helperFunction';
 
 const EmpBooking = () => {
 
-  const [bookings, setBookings] = useState([])
-  const [id, setId] = useState({
-    id: ''
-  });
+  const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setId({ ...id, [e.target.name]: e.target.value })
+  async function handleShowBookings() {
+    setLoading(true);
+    try {
+      const res = await apiRequest(`${process.env.REACT_APP_URL}/bookings/showBookings`,'get');
+      setBookings(res.data.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false)
+    }
   }
 
-  function handleShowBookings() {
-    axios.get(`${process.env.REACT_APP_URL}/bookings/showBookings`, {
-      headers: {
-        authorization: `bearer ${localStorage.getItem('token')}`
-      }
-    })
-      .then((res) => {
-        console.log(res);
-        setBookings(res.data.data);
-      })
-      .catch(error => console.log(error));
-  }
-
-  function handleDeleteBookings() {
-    axios.put(`${process.env.REACT_APP_URL}/bookings/removeBooking`, id, {
-      headers: {
-        authorization: `bearer ${localStorage.getItem('token')}`
-      }
-    })
-      .then((res) => {
-        console.log(res)
-      })
-      .catch(error => console.log(error));
+  async function handleDeleteBookings(id: React.MouseEventHandler<HTMLButtonElement>) {
+    try {
+      const res = await apiRequest(`${process.env.REACT_APP_URL}/bookings/removeBooking`,'put', {id});
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
     console.log(id);
   }
 
@@ -49,28 +39,22 @@ const EmpBooking = () => {
           <p className='headings'>Show all Bookings</p>
           <button onClick={handleShowBookings}>Show vehicle bookings</button>
           <div id='show-bookings'>
+            {loading && <p className='loading-mesg'>Loading....</p>}
             {bookings.map((data: any) => (
-              <div key={data.name} className='booking-details booking-details-div'>
+              <div key={data.name} className='booking-details-div'>
                 <p>Id : {data.id}</p>
                 <p>Customer Name: - {data.customer_name}</p>
                 <p>customer location :- {data.location}</p>
                 <p>Phone-no :- {data.phone_no}</p>
                 <p>Vehicle :- {data.vehicle}</p>
-                <p>Booking made on :- {data.created_date}</p>
-                <p>Status: {data.status}</p>
+                <p>Booking made on :- {data.created_date.split('T')[0]}</p>
+                <p>Status: {data.status === 0 ? 'Unactive' : 'Active'}</p>
+                <div className='booking-handler-buttons-div'>
+                  <button className='edit-booking-status' onClick={() => handleDeleteBookings(data.id)}>Change Status</button>
+                </div>
               </div>
             ))}
           </div>
-        </div>
-
-        
-        <div className='delete-bookings'>
-          <p>Delete Booking</p>
-          <div>
-            <label htmlFor="id">ID</label>
-            <input type="text" name='id' onChange={handleChange} />
-          </div>
-          <button onClick={handleDeleteBookings}>Delete Bookings</button>
         </div>
       </div>
       <Footer />

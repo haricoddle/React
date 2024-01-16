@@ -1,8 +1,8 @@
 .accessories-container{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 2rem;
+    padding-inline: 16px;
     background-image: url(../../images/accessories-img.jpg);
     background-size: cover;
     background-position: center;
@@ -15,7 +15,6 @@
     justify-content: center;
     align-items: center;
     gap: 10px;
-    width: 600px;
     margin-block: 10px;
     background-color: rgba(99, 98, 96, 0.866);
     font-size: 1.2rem;

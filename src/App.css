@@ -91,7 +91,7 @@ input{
   background-color: rgb(246, 231, 231);
   cursor: pointer;
   z-index: 5;
-  top: 5.2%;
+  top: 2.6%;
   position: absolute;
   right: 14%;
 }
@@ -110,4 +110,11 @@ input{
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
+}
+.loading-mesg{
+  font-size: 3rem;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.729);
+  height: 100px;
+  margin-left: 300px;
 }

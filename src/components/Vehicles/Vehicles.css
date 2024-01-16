@@ -4,15 +4,14 @@
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: auto auto ;
+    padding: 10px 16px;
   }
   
   .vehicle-div{
     gap: 1rem;
-    width: 600px;
     border: 1px solid black;
     display: flex;
     flex-direction: column;

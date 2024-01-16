@@ -1,42 +1,13 @@
+import React from "react";
 import { useNavigate } from "react-router-dom"
 
-const Header = () => {
-
+const Header = () => {    
     const Navigate = useNavigate();
+    const handleMotorcycle = () => Navigate('/vehicles')
+    const handleAccessories = () => Navigate('/accessories')
+    const handlehome = () => Navigate('/home')
+    const handleBooking = () =>  Navigate('/bookings')
 
-    function handleMotorcycle() {
-        if (localStorage.getItem('token')) {
-            Navigate('/vehicles');
-        } else {
-            alert('Please Login before using the services');
-            Navigate('/')
-        }
-    }
-    function handleAccessories() {
-        if (localStorage.getItem('token')) {
-            Navigate('/accessories');
-        } else {
-            alert('Please Login before using the services');
-            Navigate('/')
-        }
-    }
-    function handlehome() {
-        if (localStorage.getItem('token')) {
-            Navigate('/home');
-        } else {
-            alert('Please Login before using the services');
-            Navigate('/')
-        }
-    }
-
-    function handleBooking() {
-        if (localStorage.getItem('token')) {
-            Navigate('/bookings');
-        } else {
-            alert('Please Login before using the services');
-            Navigate('/')
-        }
-    }
 
     return (
         <div>

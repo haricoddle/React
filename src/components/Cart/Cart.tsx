@@ -1,38 +1,40 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Header from '../Header';
 import Footer from '../Footer';
 import { useNavigate } from 'react-router-dom';
 import './Cart.css'
+import { RootState } from '../../Redux/Store';
+import { apiRequest } from '../../HelperFunction/helperFunction';
 
 const Cart = () => {
   const Navigate = useNavigate();
-  const customerId = useSelector((state: any) => state.user.id);
+  const [loading, setLoading] = useState<boolean>(false);
+
+
+  const customerId = useSelector((state: RootState) => state.user.id);
 
   const [cartData, setCartData] = useState([]);
 
   useEffect(() => {
-    axios.post(`${process.env.REACT_APP_URL}/cart/showCart`, { customerId },{
-      headers: {
-          authorization: `bearer ${localStorage.getItem('token')}`
-      }
-  })
-      .then((res) => {
-        const data = res.data.data;
-        setCartData(data);
-        console.log(cartData);
-        console.log(customerId);
-      })
-      .catch((error) => {
+    setLoading(true);
+    const fetchData = async () => {
+      try {
+      const res = await apiRequest(`${process.env.REACT_APP_URL}/cart/showCart`,'post', { customerId });
+      const data = res.data.data;
+      setCartData(data);
+      } catch (error) {
         console.log(error);
-      });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function handleLogout() {
-    localStorage.removeItem('token');
-    Navigate('/');
+    handleAuth('/')
   }
 
   function handleAddItems() {
@@ -53,6 +55,7 @@ const Cart = () => {
             </>
           ) : (
             <div className='cart-items-div'>
+              {loading && <p className='loading-mesg'>Loading....</p>}
               {cartData.map((data: any) => (
                 <div key={data?.index}>
                   <div key={data.name} className='cart'>
@@ -76,3 +79,7 @@ const Cart = () => {
 }
 
 export default Cart
+
+function handleAuth(arg0: string) {
+  throw new Error('Function not implemented.');
+}

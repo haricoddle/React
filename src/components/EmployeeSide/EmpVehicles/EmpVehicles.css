@@ -1,8 +1,15 @@
-.vehicle-container{
+.emp-vehicle-container{
+    background-image: url(../../../images/book-bike.jpg);
+
     height: 600px;
 }
 .add-vehicle-container{  
     background-color: rgba(128, 128, 128, 0.637);
+    display: flex;
+    top: 15%;
+    position: relative;
+    align-items: center;
+    flex-direction: column;
     form{
     width: 500px;
     display: flex;

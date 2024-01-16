@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 type User = {
     id: string,
@@ -18,7 +18,7 @@ const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        setUserDetails: (state, action) => {
+        setUserDetails: (state, action: PayloadAction<any>) => {
             return { ...state, ...action.payload }
         }
     }

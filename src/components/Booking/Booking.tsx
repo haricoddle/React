@@ -3,7 +3,9 @@ import img from '../../images/book-bike.jpg'
 import Header from '../Header'
 import Footer from '../Footer'
 import './Booking.css'
-import axios from 'axios'
+import { apiRequest } from '../../HelperFunction/helperFunction'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../Redux/Store'
 
 type BookingDetails = {
     customerName: string,
@@ -13,8 +15,7 @@ type BookingDetails = {
 }
 
 const Booking = () => {
-    const errorMessageArea = document.getElementById('error-mesg-area');
-    const successMessageArea = document.getElementById('success-mesg-area');
+    const vehicleData = useSelector((state: RootState) => state.vehicles);
 
     const [details, setDetails] = useState<BookingDetails>({
         customerName: '',
@@ -31,33 +32,17 @@ const Booking = () => {
         setDetails({ ...details, [e.target.name]: e.target.value })
     }
 
-    function handleBoking(event: FormEvent<HTMLFormElement>) {
+    async function handleBoking(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
         console.log(details);
-        axios.post(`${process.env.REACT_APP_URL}/bookings/newBookings`, details, {
-            headers: {
-                authorization: `bearer ${localStorage.getItem('token')}`
-            }
-        })
-            .then((res) => {
-                console.log(res.status);
-                if (res.status === 200) {
-                    if (successMessageArea) {
-                        successMessageArea.innerHTML = '';
-                        successMessageArea.innerHTML = '** Booking Added Successfully. We will reach out to you soon'
-                    }
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-                const status = error.response.status;
-                if (status === 409 || status === 400 || status === 500) {
-                    if (errorMessageArea) {
-                        errorMessageArea.innerHTML = '';
-                        errorMessageArea.innerHTML = error.response.data.error;
-                    }
-                }
-            });
+        try {
+        const res = await apiRequest(`${process.env.REACT_APP_URL}/bookings/newBookings`,'post', details);
+        if(res.status === 200) {
+            alert('booking added successfully');
+        }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (
@@ -71,42 +56,22 @@ const Booking = () => {
                     <form className='booking-form' onSubmit={handleBoking}>
 
                         <label htmlFor="customerName">Customer Name:-</label>
-                        <input type="text" name='customerName' placeholder='Name' onChange={handleDataChange} />
+                        <input type="text" name='customerName' placeholder='Name' onChange={handleDataChange} required/>
 
                         <label htmlFor="phoneNo">Phone no:-</label>
-                        <input type="tel" name='phoneNo' placeholder='Phone No.' onChange={handleDataChange} />
+                        <input type="tel" name='phoneNo' placeholder='Phone No.' onChange={handleDataChange} required/>
 
                         <label htmlFor="location">Enter your location</label>
-                        <input type="text" name='location' placeholder='Current location' onChange={handleDataChange} />
+                        <input type="text" name='location' placeholder='Current location' onChange={handleDataChange} required/>
 
                         <label htmlFor="vehicle">Choose the vehicle</label>
-                        <select name="vehicle" id="vehicle" onChange={handleSelectDataChange}>
+                        <select name="vehicle" id="vehicle" onChange={handleSelectDataChange} required>
                             <option value="">Select a option</option>
-                            <optgroup label='Bikes'>
-                                <option value="fz_s(blue)">fz_s(blue)</option>
-                                <option value="fz_s(silver)">fz_s(silver)</option>
-                                <option value="fz_s(black)">fz_s(black)</option>
-                                <option value="r15(blue)">r15(blue)</option>
-                                <option value="r15(black)">r15(black)</option>
-                                <option value="r15(moster edition)">r15(moster edition)</option>
-                                <option value="niken(black)">niken(black)</option>
-                                <option value="niken(blue)">niken(blue)</option>
-                                <option value="R1">R1</option>
-                                <option value="R6">R6</option>
-                            </optgroup>
-                            <optgroup label='Scooter'>
-                                <option value="fasino(red)">fasino(red)</option>
-                                <option value="fasino(black)">fasino(black)</option>
-                                <option value="fasino(blue)">fasino(blue)</option>
-                            </optgroup>
-                            <optgroup label='Electric'>
-                                <option value="yola(black)">yola(black)</option>
-                                <option value="yola(blue)">yola(blue)</option>
-                            </optgroup>
+                            {vehicleData.map((data:any)=> (
+                                <option key={data.id} value={data.model_name}>{data.model_name}</option>
+                            ))}
                         </select>
                         <button className='booking-submit-btn'>Sumbit</button>
-                        <p id='error-mesg-area'></p>
-                        <p id='success-mesg-area'></p>
                     </form>
                 </div>
             </div>

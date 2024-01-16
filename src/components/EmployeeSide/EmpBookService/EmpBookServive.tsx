@@ -1,43 +1,34 @@
 import React, { useState } from 'react'
 import Footer from '../../Footer'
 import EmpHeader from '../EmpHeader/EmpHeader'
-import axios from 'axios';
 import './EmpBookService.css'
+import { apiRequest } from '../../../HelperFunction/helperFunction';
 
 const EmpBookServive = () => {
 
-  const [bookingId, setBookingId] = useState({
-    id: ''
-  });
+  const [bookingData, setBookingData] = useState([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setBookingId({ ...bookingId, [e.target.name]: e.target.value })
-  }
-
-  const [bookingData, setBookingData] = useState([])
-
-  function handleShowBookings() {
-    axios.get(`${process.env.REACT_APP_URL}/bookService/showBookings`, {
-      headers: {
-        authorization: `bearer ${localStorage.getItem('token')}`
-      }
-    }).then((res) => {
+  async function handleShowBookings() {
+    setLoading(true);
+    try {
+      const res = await apiRequest(`${process.env.REACT_APP_URL}/service/showBookings`, 'get');
       setBookingData(res.data.data);
-    })
-      .catch(error => console.log(error));
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false)
+    }
   }
 
-  function handleEditBooking() {
-    axios.put(`${process.env.REACT_APP_URL}/bookService/update`, bookingId, {
-      headers: {
-        authorization: `bearer ${localStorage.getItem('token')}`
-      }
-    })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch(error => console.log(error));
-    console.log(bookingId);
+  async function handleEditBooking(id: React.MouseEventHandler<HTMLButtonElement>) {
+    try {
+      const res = await apiRequest(`${process.env.REACT_APP_URL}/service/update`,'post', { id });
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+    console.log(id);
   }
 
   return (
@@ -45,31 +36,27 @@ const EmpBookServive = () => {
       <EmpHeader />
       <div className='service-booking-container background-image-style'>
         <div className='booking-details-container'>
-        <p className='headings'>Show all bookings</p>
+          <p className='headings'>Show all bookings</p>
 
           <button onClick={handleShowBookings}>Show all Bookings</button>
           <div id='show-service-bookings'>
+            {loading && <p className='loading-mesg'>Loading....</p>}
             {bookingData.map((data: any) => (
               <div key={data.id} className='booking-data'>
-                <p>{data.id}</p>
-                <p>{data.cust_id}</p>
-                <p>{data.vehicle_id}</p>
-                <p>{data.date}</p>
-                <p>{data.issue_faced}</p>
-                <p>{data.booking_status}</p>
+                <p>Service-Id:- {data.id}</p>
+                <p>Customer-id:- {data.cust_id}</p>
+                <p>Vehicle-id:- {data.vehicle_id}</p>
+                <p>Booked date: -{data.date.split('T')[0]}</p>
+                <p>Issue faced:- {data.issue_faced}</p>
+                <p>Status:- {data.booking_status}</p>
+                <div>
+                  <button className='edit-booking-status' onClick={() => handleEditBooking(data.id)}>Edit booking status</button>
+                </div>
               </div>
             ))}
           </div>
         </div>
 
-        <div className='edit-booking-container'>
-          <p>Edit Booking Status</p>
-          <div>
-          <label htmlFor="id">ID</label>
-          <input type="text" name='id' onChange={handleChange} />
-          </div>
-          <button onClick={handleEditBooking}>Edit a Booking</button>
-        </div>
       </div>
       <Footer />
     </>

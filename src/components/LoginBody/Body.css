@@ -14,7 +14,6 @@
     position: absolute;
     top: 30%;
     right: 40%;
-    height: 380px;
     gap: 0.2rem;
     display: flex;
     flex-direction: column;
@@ -61,4 +60,12 @@
     border-radius: 20px;
     margin-left: 25px;
     font-weight: 700;
+  }
+  .err-mesg-style{
+    color: red;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: center;
   }

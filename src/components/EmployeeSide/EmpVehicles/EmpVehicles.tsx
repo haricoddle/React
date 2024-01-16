@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Footer from '../../Footer'
 import EmpHeader from '../EmpHeader/EmpHeader'
-import axios from 'axios';
+import { apiRequest } from '../../../HelperFunction/helperFunction';
 import './EmpVehicles.css'
 
 const EmpVehicles = () => {
@@ -18,39 +18,35 @@ const EmpVehicles = () => {
     setDetails({ ...details, [e.target.name]: e.target.value })
   }
 
-  function handleAdd() {
-    axios.post(`${process.env.REACT_APP_URL}/vehicle/addVehicle`, details, {
-      headers: {
-          authorization: `bearer ${localStorage.getItem('token')}`
-      }
-  })
-  .then((res) => {
-    console.log(res);
-  })
-  .catch(error => console.log(error));
-  console.log(details)
+  async function handleAdd() {
+    try {
+      const res = await apiRequest(`${process.env.REACT_APP_URL}/vehicle/addVehicle`,'post', details);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
     <>
       <EmpHeader />
-      <div className='vehicle-container'>
+      <div className='emp-vehicle-container background-image-style'>
         <div className='add-vehicle-container'>
           <form>
             <label htmlFor="typeId">Type id</label>
-            <input type="text" name='typeId' placeholder='Type id' onChange={handleChange}/>
+            <input type="text" name='typeId' placeholder='Type id' onChange={handleChange} required/>
 
             <label htmlFor="modelName">Model name</label>
-            <input type="text" name='modelName' placeholder='Model name' onChange={handleChange}/>
+            <input type="text" name='modelName' placeholder='Model name' onChange={handleChange} required/>
 
             <label htmlFor="cc">CC</label>
-            <input type="text" name='cc' placeholder='cc' onChange={handleChange}/>
+            <input type="text" name='cc' placeholder='cc' onChange={handleChange} required/>
 
             <label htmlFor="price">Price</label>
-            <input type="text" name="price" placeholder='Price' onChange={handleChange}/>
+            <input type="text" name="price" placeholder='Price' onChange={handleChange} required/>
 
             <label htmlFor="colorId">Color Id</label>
-            <input type="text" name="colorId" placeholder='Color Id' onChange={handleChange}/>
+            <input type="text" name="colorId" placeholder='Color Id' onChange={handleChange} required/>
 
           </form>
           <button onClick={handleAdd}>Add a vehicle</button>

@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import Footer from '../Footer';
 import Header from '../Header';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './BookService.css';
+import { apiRequest } from '../../HelperFunction/helperFunction';
 
 type Details = {
   modelName: string,
@@ -32,30 +32,17 @@ const BookService = () => {
     Navigate('/cart');
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     console.log(details);
-    axios.post(`${process.env.REACT_APP_URL}/service/booking`, details, {
-      headers: {
-          authorization: `bearer ${localStorage.getItem('token')}`
-      }
-  })
-      .then((res: any) => {
-        console.log(res)
-        if (res.status === 200) {
-          if (messageArea) {
-            messageArea.innerHTML = '';
-            messageArea.insertAdjacentHTML('afterbegin', 'Booking is successful')
-          }
-        } else if (messageArea) {
-            messageArea.innerHTML = '';
-            messageArea.insertAdjacentHTML('afterbegin', 'Booking was un-successful')
-          }
-      })
-      .catch(error => console.log(error));
+    try {
+      const res = await apiRequest(`${process.env.REACT_APP_URL}/service/booking`,'post', details);
+      console.log(res);
+      alert('Booking is successful');
+    } catch (error) {
+      console.log(error);
+    }
   }
-
-  const messageArea = document.getElementById('message-area');
 
   return (
     <>
@@ -66,11 +53,11 @@ const BookService = () => {
         <form className='service-form' onSubmit={handleSubmit}>
           <div>
             <label htmlFor="date">Choose a date :- </label>
-            <input type="date" name='date' id='date' onChange={handleChange} />
+            <input type="date" name='date' id='date' onChange={handleChange} required/>
           </div>
           <div>
             <label htmlFor="modelName">Vehicle Model :- </label>
-            <input type="text" name='modelName' id='modelName' onChange={handleChange} />
+            <input type="text" name='modelName' id='modelName' onChange={handleChange} required/>
           </div>
           <div>
             <label htmlFor="issueFaced">Enter the issue Faced :- </label>
