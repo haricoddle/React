@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import img from '../../images/bg-image.jpg';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -33,18 +33,24 @@ const Body = () => {
     Navigate('/emplogin')
   }
 
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      Navigate('/home');
+    }
+  })
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
-      const res = await apiRequest(`${process.env.REACT_APP_URL}/customer/login`,'post', details);
+      const res = await apiRequest(`${process.env.REACT_APP_URL}/customer/login`, 'post', details);
       localStorage.setItem('token', res.data.token);
       dispatch(setUserDetails({
-                id: res.data.data.id,
-                name: res.data.data.name,
-                roles: res.data.data.roles,
-                userName: res.data.data.username
-              }))
-              Navigate('/home');
+        id: res.data.data.id,
+        name: res.data.data.name,
+        roles: res.data.data.roles,
+        userName: res.data.data.username
+      }))
+      Navigate('/home');
     } catch (error) {
       alert('try again');
     }
@@ -62,12 +68,12 @@ const Body = () => {
         <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="userName">Username</label>
-            <input type="text" name="userName" id="username" placeholder='Username' onChange={handleChange} required/>
+            <input type="text" name="userName" id="username" placeholder='Username' onChange={handleChange} required />
           </div>
 
           <div>
             <label htmlFor="password">Password</label>
-            <input type="password" name="password" id="password" placeholder='Password' onChange={handleChange} required/>
+            <input type="password" name="password" id="password" placeholder='Password' onChange={handleChange} required />
           </div>
 
           <button id='login-btn'>LOGIN</button>
