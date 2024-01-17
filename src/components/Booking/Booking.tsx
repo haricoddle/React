@@ -3,9 +3,10 @@ import img from '../../images/book-bike.jpg'
 import Header from '../Header'
 import Footer from '../Footer'
 import './Booking.css'
-import { apiRequest } from '../../HelperFunction/helperFunction'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../Redux/Store'
+import { newBookingAPI } from '../../API/UserSide'
+import Modal from '../Modal/Modal'
 
 type BookingDetails = {
     customerName: string,
@@ -16,6 +17,9 @@ type BookingDetails = {
 
 const Booking = () => {
     const vehicleData = useSelector((state: RootState) => state.vehicles);
+
+    const [error, setError] = useState<boolean>(false);
+
 
     const [details, setDetails] = useState<BookingDetails>({
         customerName: '',
@@ -36,18 +40,21 @@ const Booking = () => {
         event.preventDefault();
         console.log(details);
         try {
-        const res = await apiRequest(`${process.env.REACT_APP_URL}/bookings/newBookings`,'post', details);
-        if(res.status === 200) {
-            alert('booking added successfully');
-        }
+            const res = await newBookingAPI(details);
+            if (res) {
+                alert('booking added successfully');
+            }
         } catch (error) {
-            console.log(error);
+            setError(true);
         }
     }
 
     return (
         <>
             <Header />
+            {error && (
+                <Modal />
+            )}
             <div className="main-booking-div ">
                 <figure className='booking-div-bg-img'>
                     <img src={img} alt="Background" />
@@ -56,18 +63,18 @@ const Booking = () => {
                     <form className='booking-form' onSubmit={handleBoking}>
 
                         <label htmlFor="customerName">Customer Name:-</label>
-                        <input type="text" name='customerName' placeholder='Name' onChange={handleDataChange} required/>
+                        <input type="text" name='customerName' placeholder='Name' onChange={handleDataChange} required />
 
                         <label htmlFor="phoneNo">Phone no:-</label>
-                        <input type="tel" name='phoneNo' placeholder='Phone No.' onChange={handleDataChange} required/>
+                        <input type="tel" name='phoneNo' placeholder='Phone No.' onChange={handleDataChange} required />
 
                         <label htmlFor="location">Enter your location</label>
-                        <input type="text" name='location' placeholder='Current location' onChange={handleDataChange} required/>
+                        <input type="text" name='location' placeholder='Current location' onChange={handleDataChange} required />
 
                         <label htmlFor="vehicle">Choose the vehicle</label>
                         <select name="vehicle" id="vehicle" onChange={handleSelectDataChange} required>
                             <option value="">Select a option</option>
-                            {vehicleData.map((data:any)=> (
+                            {vehicleData.map((data: any) => (
                                 <option key={data.id} value={data.model_name}>{data.model_name}</option>
                             ))}
                         </select>

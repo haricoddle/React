@@ -2,7 +2,8 @@ import React, { FormEvent, useState } from 'react'
 import Footer from '../../Footer'
 import EmpHeader from '../EmpHeader/EmpHeader'
 import './Employee.css';
-import { apiRequest } from '../../../HelperFunction/helperFunction';
+import { addEmployeeAPI } from '../../../API/EmpSide';
+import Modal from '../../Modal/Modal';
 
 type User = {
   deptId: string,
@@ -15,6 +16,8 @@ type User = {
 }
 
 const Employee = () => {
+
+  const [error, setError] = useState<boolean>(false);
 
   const [details, setDetails] = useState<User>({
     deptId: '',
@@ -33,10 +36,12 @@ const Employee = () => {
   async function handleAdd(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
-      const res = await apiRequest(`${process.env.REACT_APP_URL}/employee/register`,'post', details);
-      console.log(res);
+      const res = await addEmployeeAPI(details);
+      if(res){
+        alert('New employee added successfully.');
+      }
     } catch (error) {
-      console.log(error);
+      setError(true);
     }
   }
 
@@ -44,35 +49,38 @@ const Employee = () => {
   return (
     <>
       <EmpHeader />
+      {error && (
+        <Modal />
+      )}
       <div className='employee-container background-image-style'>
         <div className='add-employee-container'>
           <form className='add-emp-form' onSubmit={handleAdd}>
 
             <div>
               <label htmlFor="deptId">Department ID</label>
-              <input type="text" name="deptId" placeholder='Dept ID' onChange={handleChange} required/>
+              <input type="text" name="deptId" placeholder='Dept ID' onChange={handleChange} required />
             </div>
 
             <div>
               <label htmlFor="name">Name</label>
-              <input type="text" name="name" placeholder='Name' onChange={handleChange} required/>
+              <input type="text" name="name" placeholder='Name' onChange={handleChange} required />
             </div>
 
             <div>
               <label htmlFor="dob">D.O.B</label>
-              <input type="date" name="dob" onChange={handleChange} required/>
+              <input type="date" name="dob" onChange={handleChange} required />
             </div>
 
 
             <div>
               <label htmlFor="phone">Phone No</label>
-              <input type="text" name="phone" placeholder='Phone No' onChange={handleChange} required/>
+              <input type="text" name="phone" placeholder='Phone No' onChange={handleChange} required />
 
             </div>
 
             <div>
               <label htmlFor="mail">E-mail Id</label>
-              <input type="text" name="mail" placeholder='e-mail' onChange={handleChange} required/>
+              <input type="text" name="mail" placeholder='e-mail' onChange={handleChange} required />
             </div>
 
             <div>
@@ -82,7 +90,7 @@ const Employee = () => {
 
             <div>
               <label htmlFor="salary">Salary</label>
-              <input type="text" name="salary" placeholder='salary' onChange={handleChange} required/>
+              <input type="text" name="salary" placeholder='salary' onChange={handleChange} required />
             </div>
             <button >Add a employee</button>
 

@@ -6,7 +6,7 @@ import './EmpHomepage.css';
 
 const EmpHomePage = () => {
     const Navigate = useNavigate();
-    
+
     function handleLogout() {
         localStorage.removeItem('token');
         if (localStorage.length === 0) {
@@ -14,27 +14,8 @@ const EmpHomePage = () => {
         }
     }
 
-    function handleVehicleBooking() {
-        Navigate('/empHome/vehiclesBooking')
-    }
-
-    function handleAccessories() {
-        Navigate('/empHome/accessories')
-    }
-
-    function handleServiceBookings() {
-        Navigate('/empHome/serviceBooking')
-    }
-
-    function handleVehicles() {
-        Navigate('/empHome/vehicles')
-    }
-    function handleCustomers() {
-        Navigate('/empHome/customer')
-    }
-
-    function handleEmployee() {
-        Navigate('/empHome/employee')
+    function handleNavigate(path: string) {
+        Navigate(path);
     }
 
     return (
@@ -50,31 +31,31 @@ const EmpHomePage = () => {
                 <div className="homepage-div">
                     <div className="booking-options-div grid-style">
                         <p className="option-text-style">Vehicle Bookings</p>
-                        <button className="option-btn-style" onClick={handleVehicleBooking}>Go to options</button>
+                        <button className="option-btn-style" onClick={() => handleNavigate('/empHome/vehiclesBooking')}>Go to options</button>
                     </div>
                     <div className="accessories options-div grid-style">
                         <p className="option-text-style">Accessories</p>
-                        <button className="option-btn-style" onClick={handleAccessories}>Go to options</button>
+                        <button className="option-btn-style" onClick={() => handleNavigate('/empHome/accessories')}>Go to options</button>
 
                     </div>
                     <div className="service-booking-options-div grid-style">
                         <p className="option-text-style">Service Bookings</p>
-                        <button className="option-btn-style" onClick={handleServiceBookings}>Go to options</button>
+                        <button className="option-btn-style" onClick={() => handleNavigate('/empHome/serviceBooking')}>Go to options</button>
 
                     </div>
                     <div className="vehicles-options-div grid-style">
                         <p className="option-text-style">Vehicles</p>
-                        <button className="option-btn-style" onClick={handleVehicles}>Go to options</button>
+                        <button className="option-btn-style" onClick={() => handleNavigate('/empHome/vehicles')}>Go to options</button>
 
                     </div>
                     <div className="customers-options-div grid-style">
                         <p className="option-text-style">Customers</p>
-                        <button className="option-btn-style" onClick={handleCustomers}>Go to options</button>
+                        <button className="option-btn-style" onClick={() => handleNavigate('/empHome/customer')}>Go to options</button>
 
                     </div>
                     <div className="employee-options-div grid-style">
                         <p className="option-text-style">Employee</p>
-                        <button className="option-btn-style" onClick={handleEmployee}>Go to options</button>
+                        <button className="option-btn-style" onClick={() => handleNavigate('/empHome/employee')}>Go to options</button>
 
                     </div>
                 </div>

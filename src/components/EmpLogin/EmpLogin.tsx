@@ -3,7 +3,8 @@ import img from '../../images/bg-image.jpg';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../Footer';
 import './EmpLogin.css'
-import { apiRequest } from '../../HelperFunction/helperFunction';
+import { employeeloginAPI } from '../../API/EmpSide';
+import Modal from '../Modal/Modal';
 
 type User = {
     userName: string,
@@ -12,6 +13,8 @@ type User = {
 
 const EmpLogin = () => {
     const Navigate = useNavigate();
+
+    const [error, setError] = useState<boolean>(false);
 
     const [details, setDetails] = useState<User>({
         userName: '',
@@ -25,10 +28,11 @@ const EmpLogin = () => {
     async function handleLogin(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
         try {
-            const res = await apiRequest(`${process.env.REACT_APP_URL}/employee/empLogin`, 'post', details);
+            const res = await employeeloginAPI(details);
             localStorage.setItem('token', res.data.token);
             Navigate('/empHome')
         } catch (error) {
+            setError(true);
             alert('try again')
         }
     }
@@ -36,6 +40,9 @@ const EmpLogin = () => {
     return (
 
         <>
+            {error && (
+                <Modal />
+            )}
             <div className='body-div'>
                 <figure>
                     <img src={img} alt="background" />

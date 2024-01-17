@@ -3,14 +3,17 @@ import Header from '../Header';
 import Footer from '../Footer';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { apiRequest } from '../../HelperFunction/helperFunction';
 import './Vehicles.css'
 import { AppDispatch } from '../../Redux/Store';
 import { setVehicleDetails } from '../../Redux/VehicleSlice';
+import { showVehiclesAPI } from '../../API/UserSide';
+import Modal from '../Modal/Modal';
 
 const Vehicles = () => {
     const Navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
+    const [error, setError] = useState<boolean>(false);
+
 
     const [vehicleData, setVehicleData] = useState([]);
     const [loading, setLoading] = useState<boolean>(false);
@@ -19,18 +22,18 @@ const Vehicles = () => {
         setLoading(true);
         const fetchData = async () => {
             try {
-                const res = await apiRequest(`${process.env.REACT_APP_URL}/vehicle/allVehicles`, 'get');
+                const res = await showVehiclesAPI();
                 const data = res.data.data;
                 setVehicleData(data);
                 dispatch(setVehicleDetails(data));
-                console.log(res);
             } catch (error) {
-                console.log(error);
+                setError(true);
             } finally {
                 setLoading(false);
             }
         };
         fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     function handleLogout() {
@@ -38,16 +41,19 @@ const Vehicles = () => {
         Navigate('/');
     }
 
-    function handleCart() {
+    function handleCart(path: string) {
         if (localStorage.getItem('token')) {
-            Navigate('/cart');
+            Navigate(path);
         }
     }
 
     return (
         <>
             <Header />
-            <i className="fa-solid fa-cart-shopping" onClick={handleCart} onKeyDown={handleCart}></i>
+            {error && (
+                <Modal />
+            )}
+            <i className="fa-solid fa-cart-shopping" onClick={() => handleCart('/cart')} onKeyDown={() => handleCart('/cart')}></i>
             <button className='logout-btn' onClick={handleLogout}>Logout</button>
             <div className='vehicle-container'>
                 {loading && <p className='loading-mesg'>Loading....</p>}

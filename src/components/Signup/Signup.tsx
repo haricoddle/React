@@ -2,7 +2,8 @@ import React, { FormEvent, useState } from 'react';
 import Footer from '../Footer';
 import img from '../../images/bg-image.jpg';
 import './Signup.css'
-import { apiRequest } from '../../HelperFunction/helperFunction';
+import { createUserAPI } from '../../API/UserSide';
+import Modal from '../Modal/Modal';
 
 type User = {
     name: string,
@@ -14,6 +15,8 @@ type User = {
 }
 
 const Signup = () => {
+
+    const [error, setError] = useState<boolean>(false);
 
     const [details, setDetails] = useState<User>({
         name: '',
@@ -32,15 +35,19 @@ const Signup = () => {
         console.log(details);
         event.preventDefault();
         try {
-        const res = await apiRequest(`${process.env.REACT_APP_URL}/vehicle/addVehicle`,'post', details);
-        console.log(res);
-        alert('new user created');    
+            const res = await createUserAPI(details);
+            if (res) {
+                alert('new user created');
+            }
         } catch (error) {
-            console.log(error);
+            setError(true);
         }
     }
     return (
         <div className='signup-div'>
+            {error && (
+                <Modal />
+            )}
             <figure>
                 <img src={img} alt="background" />
                 <p className='caption-p'>START YOUR <br /> RIDE WITH US....</p>
@@ -50,17 +57,17 @@ const Signup = () => {
 
                     <div>
                         <label htmlFor="name">Name</label>
-                        <input type="text" name="name" placeholder='Name' onChange={handleChange} required/>
+                        <input type="text" name="name" placeholder='Name' onChange={handleChange} required />
                     </div>
 
                     <div>
                         <label htmlFor="phone">Phone</label>
-                        <input type="text" name="phone" placeholder='Phone' onChange={handleChange} required/>
+                        <input type="text" name="phone" placeholder='Phone' onChange={handleChange} required />
                     </div>
 
                     <div>
                         <label htmlFor="email">E-mail</label>
-                        <input type="text" name="email" placeholder='E-mail' onChange={handleChange} required/>
+                        <input type="text" name="email" placeholder='E-mail' onChange={handleChange} required />
                     </div>
 
                     <div>
@@ -70,12 +77,12 @@ const Signup = () => {
 
                     <div>
                         <label htmlFor="userName">Username</label>
-                        <input type="text" name="userName" placeholder='username' onChange={handleChange} required/>
+                        <input type="text" name="userName" placeholder='username' onChange={handleChange} required />
                     </div>
 
                     <div>
                         <label htmlFor="password">Password</label>
-                        <input type="text" name="password" placeholder='Password' onChange={handleChange} required/>
+                        <input type="text" name="password" placeholder='Password' onChange={handleChange} required />
                     </div>
 
                     <button> Register </button>

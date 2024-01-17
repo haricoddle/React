@@ -2,20 +2,22 @@ import React, { useState } from 'react'
 import Footer from '../../Footer'
 import EmpHeader from '../EmpHeader/EmpHeader'
 import './EmpBookService.css'
-import { apiRequest } from '../../../HelperFunction/helperFunction';
+import { editServiceBookingsAPI, serviceBookingsAPI } from '../../../API/EmpSide';
+import Modal from '../../Modal/Modal';
 
 const EmpBookServive = () => {
 
   const [bookingData, setBookingData] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
 
   async function handleShowBookings() {
     setLoading(true);
     try {
-      const res = await apiRequest(`${process.env.REACT_APP_URL}/service/showBookings`, 'get');
+      const res = await serviceBookingsAPI();
       setBookingData(res.data.data);
     } catch (error) {
-      console.log(error);
+      setError(true);
     } finally {
       setLoading(false)
     }
@@ -23,17 +25,21 @@ const EmpBookServive = () => {
 
   async function handleEditBooking(id: React.MouseEventHandler<HTMLButtonElement>) {
     try {
-      const res = await apiRequest(`${process.env.REACT_APP_URL}/service/update`,'post', { id });
-      console.log(res);
+      const res = await editServiceBookingsAPI({ id });
+      if(res){
+        alert('Booking edited successfully');
+      }
     } catch (error) {
-      console.log(error);
+      setError(true);
     }
-    console.log(id);
   }
 
   return (
     <>
       <EmpHeader />
+      {error && (
+        <Modal />
+      )}
       <div className='service-booking-container background-image-style'>
         <div className='booking-details-container'>
           <p className='headings'>Show all bookings</p>

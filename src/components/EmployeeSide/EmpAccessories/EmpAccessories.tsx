@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import Footer from '../../Footer'
 import EmpHeader from '../EmpHeader/EmpHeader'
 import './EmpAccessories.css'
-import { apiRequest } from '../../../HelperFunction/helperFunction';
+import { addPartsAPI, updatePartsAPI } from '../../../API/EmpSide';
+import Modal from '../../Modal/Modal';
 
 type Items = {
   id: string,
@@ -17,6 +18,8 @@ type NewItems = {
 }
 
 const EmpAccessories = () => {
+
+  const [error, setError] = useState<boolean>(false);
 
   const [details, setDetails] = useState<NewItems>({
     accessoryId: '',
@@ -40,20 +43,22 @@ const EmpAccessories = () => {
 
   async function handleAddAccessory() {
     try {
-      const res = await apiRequest(`${process.env.REACT_APP_URL}/parts/addParts`,'post', details);
-      console.log(res);
+      const res = await addPartsAPI(details);
+      if(res){
+        alert('Accessory added successfully');
+      }
     } catch (error) {
-      console.log(error);
+      setError(true);
     }
   }
 
 
   async function handleEditAccessory() {
     try {
-      const res = await apiRequest(`${process.env.REACT_APP_URL}/parts/updatePartQuery`,'put', itemDetails);
+      const res = await updatePartsAPI(itemDetails);
       console.log(res);
     } catch (error) {
-      console.log(error);
+      setError(true);
     }
     console.log(itemDetails);
   }
@@ -61,6 +66,9 @@ const EmpAccessories = () => {
   return (
     <>
       <EmpHeader />
+      {error && (
+        <Modal />
+      )}
       <div className='emp-accessory accessories-container'>
 
         <div>
@@ -71,13 +79,13 @@ const EmpAccessories = () => {
               <input type="text" name="accessoryId" placeholder='Accessory Id' onChange={handleItemChange} />
 
               <label htmlFor="name">Accessory Name*</label>
-              <input type="text" name='name' placeholder='Accessory Name' onChange={handleItemChange} required/>
+              <input type="text" name='name' placeholder='Accessory Name' onChange={handleItemChange} required />
 
               <label htmlFor="price">Price*</label>
-              <input type="text" name='price' placeholder='Price' onChange={handleItemChange} required/>
+              <input type="text" name='price' placeholder='Price' onChange={handleItemChange} required />
 
               <label htmlFor="stock">Stock Availabele*</label>
-              <input type="text" name='stock' placeholder='Stock' onChange={handleItemChange} required/>
+              <input type="text" name='stock' placeholder='Stock' onChange={handleItemChange} required />
 
             </form>
             <button onClick={handleAddAccessory}>Add a Accessory</button>

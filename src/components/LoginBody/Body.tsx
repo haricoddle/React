@@ -5,7 +5,8 @@ import { useDispatch } from 'react-redux';
 import { setUserDetails } from '../../Redux/UserSlice';
 import './Body.css';
 import { AppDispatch } from '../../Redux/Store';
-import { apiRequest } from '../../HelperFunction/helperFunction';
+import { loginAPI } from '../../API/UserSide';
+import Modal from '../Modal/Modal';
 
 type User = {
   userName: string,
@@ -15,6 +16,7 @@ type User = {
 const Body = () => {
   const dispatch = useDispatch<AppDispatch>();
   const Navigate = useNavigate();
+  const [error, setError] = useState<boolean>(false);
 
   const [details, setDetails] = useState<User>({
     userName: '',
@@ -25,12 +27,8 @@ const Body = () => {
     setDetails({ ...details, [e.target.name]: e.target.value })
   }
 
-  function handleSignup() {
-    Navigate('/signup')
-  }
-
-  function handleEmployeeLogin() {
-    Navigate('/emplogin')
+  function handleNavigate(path: string) {
+    Navigate(path)
   }
 
   useEffect(() => {
@@ -42,7 +40,7 @@ const Body = () => {
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
-      const res = await apiRequest(`${process.env.REACT_APP_URL}/customer/login`, 'post', details);
+      const res = await loginAPI(details);
       localStorage.setItem('token', res.data.token);
       dispatch(setUserDetails({
         id: res.data.data.id,
@@ -52,6 +50,7 @@ const Body = () => {
       }))
       Navigate('/home');
     } catch (error) {
+      setError(true);
       alert('try again');
     }
   }
@@ -59,6 +58,9 @@ const Body = () => {
   return (
 
     <div className='body-div'>
+      {error && (
+        <Modal />
+      )}
       <figure>
         <img src={img} alt="background" />
         <p className='caption-p'>START YOUR <br /> RIDE WITH US....</p>
@@ -81,10 +83,10 @@ const Body = () => {
           <div id='login-err-mesg' className='err-mesg-style'></div>
         </form>
         <div className='signup-div'>
-          <p>Don't have an account? <span className='span' id="signup-span" onClick={handleSignup} onKeyDown={handleSignup}> Sign up</span></p>
+          <p>Don't have an account? <span className='span' id="signup-span" onClick={() => handleNavigate('/signup')} onKeyDown={() => handleNavigate('/signup')}> Sign up</span></p>
         </div>
         <div>
-          <button className='emp-login'>Employee ?<span className='span' onClick={handleEmployeeLogin} onKeyDown={handleEmployeeLogin}> login</span></button>
+          <button className='emp-login'>Employee ?<span className='span' onClick={() => handleNavigate('/emplogin')} onKeyDown={() => handleNavigate('/emplogin')}> login</span></button>
         </div>
       </div>
     </div>

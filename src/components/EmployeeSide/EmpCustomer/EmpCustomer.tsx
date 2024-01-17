@@ -2,38 +2,42 @@ import React, { useState } from 'react'
 import Footer from '../../Footer'
 import EmpHeader from '../EmpHeader/EmpHeader'
 import './EmpCustomer.css';
-import { apiRequest } from '../../../HelperFunction/helperFunction';
+import { deleteCustomerAPI, showCustomerAPI } from '../../../API/EmpSide';
+import Modal from '../../Modal/Modal';
 
 const EmpCustomer = () => {
 
   const [customerData, setCustomerData] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
-
+  const [error, setError] = useState<boolean>(false);
 
   async function handleAddCustomer() {
     setLoading(true);
     try {
-      const res = await apiRequest(`${process.env.REACT_APP_URL}/customer/showDetails`,'get');
+      const res = await showCustomerAPI();
       setCustomerData(res.data.data);
     } catch (error) {
-      console.log(error)
+      setError(true);
     } finally {
       setLoading(false)
     }
   }
 
-  async function handleDeleteCustomer(id:React.MouseEventHandler<HTMLButtonElement> ) {
+  async function handleDeleteCustomer(id: React.MouseEventHandler<HTMLButtonElement>) {
     try {
-      const res = await apiRequest(`${process.env.REACT_APP_URL}/customer/delete`,'post', {id});
+      const res = await deleteCustomerAPI({ id });
       console.log(res)
     } catch (error) {
-      console.log(error);
+      setError(true);
     }
   }
 
   return (
     <>
       <EmpHeader />
+      {error && (
+        <Modal />
+      )}
       <div className='customer-container background-image-style'>
         <div className='show-customer-container'>
           <button onClick={handleAddCustomer}>Show all customer</button>
@@ -56,7 +60,7 @@ const EmpCustomer = () => {
         </div>
       </div>
       <Footer />
-      </>
+    </>
   )
 }
 

@@ -3,7 +3,8 @@ import Footer from '../Footer';
 import Header from '../Header';
 import { useNavigate } from 'react-router-dom';
 import './BookService.css';
-import { apiRequest } from '../../HelperFunction/helperFunction';
+import { serviceBookingAPI } from '../../API/UserSide';
+import Modal from '../Modal/Modal';
 
 type Details = {
   modelName: string,
@@ -24,40 +25,46 @@ const BookService = () => {
     Navigate('/');
   }
 
+  const [error, setError] = useState<boolean>(false);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDetails({ ...details, [e.target.name]: e.target.value });
   }
 
-  function handleCart() {
-    Navigate('/cart');
+  function handleNavigate(path: string) {
+    Navigate(path)
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     console.log(details);
     try {
-      const res = await apiRequest(`${process.env.REACT_APP_URL}/service/booking`,'post', details);
-      console.log(res);
-      alert('Booking is successful');
+      const res = await serviceBookingAPI(details);
+      if (res) {
+        alert('Booking is successful');
+      }
     } catch (error) {
-      console.log(error);
+      setError(true);
     }
   }
 
   return (
     <>
       <Header />
-      <i className="fa-solid fa-cart-shopping" onClick={handleCart} onKeyDown={handleCart}></i>
+      {error && (
+        <Modal />
+      )}
+      <i className="fa-solid fa-cart-shopping" onClick={() => handleNavigate('cart')} onKeyDown={() => handleNavigate('cart')}></i>
       <button className='logout-btn' onClick={handleLogout}>Logout</button>
       <div className='booking-div'>
         <form className='service-form' onSubmit={handleSubmit}>
           <div>
             <label htmlFor="date">Choose a date :- </label>
-            <input type="date" name='date' id='date' onChange={handleChange} required/>
+            <input type="date" name='date' id='date' onChange={handleChange} required />
           </div>
           <div>
             <label htmlFor="modelName">Vehicle Model :- </label>
-            <input type="text" name='modelName' id='modelName' onChange={handleChange} required/>
+            <input type="text" name='modelName' id='modelName' onChange={handleChange} required />
           </div>
           <div>
             <label htmlFor="issueFaced">Enter the issue Faced :- </label>

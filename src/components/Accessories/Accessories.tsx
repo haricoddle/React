@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import './Accessories.css'
 import Footer from '../Footer';
-import { apiRequest } from '../../HelperFunction/helperFunction';
+import { addToCartAPI, showVehicleAPI } from '../../API/UserSide';
+import Modal from '../Modal/Modal';
 
 const Accessories = () => {
   const Navigate = useNavigate();
@@ -13,6 +14,7 @@ const Accessories = () => {
 
   const [accessoriesData, setAccessoriesData] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
 
   function handleLogout() {
     localStorage.removeItem('token');
@@ -21,18 +23,18 @@ const Accessories = () => {
     }
   }
 
-  function handlecart() {
-    Navigate('/cart');
+  function handleNavigate(path: string) {
+    Navigate(path)
   }
 
   useEffect(() => {
     setLoading(true);
     const fetchData = async () => {
       try {
-        const res = await apiRequest(`${process.env.REACT_APP_URL}/parts/showAll`, 'get');
+        const res = await showVehicleAPI();
         setAccessoriesData(res.data.data);
       } catch (error) {
-        console.log(error);
+        setError(true);
       } finally {
         setLoading(false);
       }
@@ -42,16 +44,19 @@ const Accessories = () => {
 
   async function handleAddToCart(productId: string) {
     try {
-      const res = await apiRequest(`${process.env.REACT_APP_URL}/cart/addToCart`, 'post', { customerId, productId });
+      const res = await addToCartAPI({ customerId, productId });
       alert(res.data.data.message)
     } catch (error) {
-      console.log(error);
+      setError(true)
     }
   }
   return (
     <>
       <Header />
-      <i className="fa-solid fa-cart-shopping" onClick={handlecart} onKeyDown={handlecart}></i>
+      {error && (
+        <Modal />
+      )}
+      <i className="fa-solid fa-cart-shopping" onClick={() => handleNavigate('/cart')} onKeyDown={() => handleNavigate('/cart')}></i>
       <button className='logout-btn' onClick={handleLogout}>Log out</button>
       <div className="accessories-container" id='container'>
         {loading && <p className='loading-mesg'>Loading....</p>}

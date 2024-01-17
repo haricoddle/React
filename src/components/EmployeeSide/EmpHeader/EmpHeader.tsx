@@ -3,13 +3,14 @@ import { useNavigate } from 'react-router-dom'
 
 const EmpHeader = () => {
   const Navigate = useNavigate();
+
   function handleLogout() {
     localStorage.removeItem('token');
     Navigate('/');
   }
 
   function handlehome() {
-    if(localStorage.getItem('token')){
+    if (localStorage.getItem('token')) {
       Navigate('/empHome')
     }
   }

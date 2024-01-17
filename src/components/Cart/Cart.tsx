@@ -5,14 +5,15 @@ import Footer from '../Footer';
 import { useNavigate } from 'react-router-dom';
 import './Cart.css'
 import { RootState } from '../../Redux/Store';
-import { apiRequest } from '../../HelperFunction/helperFunction';
+import { showCartAPI } from '../../API/UserSide';
+import Modal from '../Modal/Modal';
 
 const Cart = () => {
   const Navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
 
-
-  const customerId = useSelector((state: RootState) => state.user.id);
+  const { id } = useSelector((state: RootState) => state.user);
 
   const [cartData, setCartData] = useState([]);
 
@@ -20,30 +21,34 @@ const Cart = () => {
     setLoading(true);
     const fetchData = async () => {
       try {
-      const res = await apiRequest(`${process.env.REACT_APP_URL}/cart/showCart`,'post', { customerId });
-      const data = res.data.data;
-      setCartData(data);
+        const res = await showCartAPI({ id });
+        const data = res.data.data;
+        setCartData(data);
       } catch (error) {
-        console.log(error);
+        setError(true);
       } finally {
         setLoading(false)
       }
     }
     fetchData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function handleLogout() {
-    handleAuth('/')
+    localStorage.removeItem('token');
+    Navigate('/')
   }
 
-  function handleAddItems() {
-    Navigate('/accessories')
+  function handleNavigate(path: string) {
+    Navigate(path)
   }
 
   return (
     <>
       <Header />
+      {error && (
+        <Modal />
+      )}
       <button className='logout-btn' onClick={handleLogout}>Logout</button>
       <h2 className='heading'>--Cart--</h2>
       <div className='cart-container'>
@@ -51,7 +56,7 @@ const Cart = () => {
           (
             <>
               <div className='cart-empty-mesg'>No Items in the cart</div>
-              <button className='add-items-button' onClick={handleAddItems}>Add items to the Cart</button>
+              <button className='add-items-button' onClick={() => handleNavigate('/accessories')}>Add items to the Cart</button>
             </>
           ) : (
             <div className='cart-items-div'>
@@ -79,7 +84,3 @@ const Cart = () => {
 }
 
 export default Cart
-
-function handleAuth(arg0: string) {
-  throw new Error('Function not implemented.');
-}

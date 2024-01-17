@@ -2,20 +2,23 @@ import React, { useState } from 'react'
 import Footer from '../../Footer'
 import EmpHeader from '../EmpHeader/EmpHeader'
 import './EmpBooking.css'
-import { apiRequest } from '../../../HelperFunction/helperFunction';
+import { deleteBookingsAPI, showBookingsAPI } from '../../../API/EmpSide';
+import Modal from '../../Modal/Modal';
 
 const EmpBooking = () => {
 
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
+
 
   async function handleShowBookings() {
     setLoading(true);
     try {
-      const res = await apiRequest(`${process.env.REACT_APP_URL}/bookings/showBookings`,'get');
+      const res = await showBookingsAPI();
       setBookings(res.data.data);
     } catch (error) {
-      console.log(error);
+      setError(true);
     } finally {
       setLoading(false)
     }
@@ -23,17 +26,21 @@ const EmpBooking = () => {
 
   async function handleDeleteBookings(id: React.MouseEventHandler<HTMLButtonElement>) {
     try {
-      const res = await apiRequest(`${process.env.REACT_APP_URL}/bookings/removeBooking`,'put', {id});
-      console.log(res);
+      const res = await deleteBookingsAPI({ id });
+      if (res) {
+        alert('Booking deleted successfully');
+      }
     } catch (error) {
-      console.log(error);
+      setError(true);
     }
-    console.log(id);
   }
 
   return (
     <>
       <EmpHeader />
+      {error && (
+        <Modal />
+      )}
       <div className='vehicle-booking-container background-image-style'>
         <div className='booking-details'>
           <p className='headings'>Show all Bookings</p>

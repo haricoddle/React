@@ -15,7 +15,7 @@ const vehicleSlice = createSlice({
     initialState: initialVehicleState,
     reducers: {
         setVehicleDetails: (state, action: PayloadAction<Vehicle[]>) => {
-            return action.payload 
+            return action.payload
         },
     }
 });
