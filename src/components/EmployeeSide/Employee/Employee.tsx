@@ -17,7 +17,7 @@ type User = {
 
 const Employee = () => {
 
-  const [error, setError] = useState<boolean>(false);
+  const [apiError, setApiError] = useState<boolean>(false);
 
   const [details, setDetails] = useState<User>({
     deptId: '',
@@ -37,11 +37,11 @@ const Employee = () => {
     event.preventDefault();
     try {
       const res = await addEmployeeAPI(details);
-      if(res){
+      if (res) {
         alert('New employee added successfully.');
       }
     } catch (error) {
-      setError(true);
+      setApiError(true);
     }
   }
 
@@ -49,8 +49,8 @@ const Employee = () => {
   return (
     <>
       <EmpHeader />
-      {error && (
-        <Modal />
+      {apiError && (
+        <Modal onClose={() => setApiError(false)} />
       )}
       <div className='employee-container background-image-style'>
         <div className='add-employee-container'>

@@ -11,7 +11,7 @@ import Modal from '../Modal/Modal';
 const Cart = () => {
   const Navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>(false);
+  const [apiError, setApiError] = useState<boolean>(false);
 
   const { id } = useSelector((state: RootState) => state.user);
 
@@ -25,7 +25,7 @@ const Cart = () => {
         const data = res.data.data;
         setCartData(data);
       } catch (error) {
-        setError(true);
+        setApiError(true);
       } finally {
         setLoading(false)
       }
@@ -46,8 +46,8 @@ const Cart = () => {
   return (
     <>
       <Header />
-      {error && (
-        <Modal />
+      {apiError && (
+        <Modal onClose={() => setApiError(false)} />
       )}
       <button className='logout-btn' onClick={handleLogout}>Logout</button>
       <h2 className='heading'>--Cart--</h2>

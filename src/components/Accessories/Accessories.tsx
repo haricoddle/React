@@ -14,7 +14,7 @@ const Accessories = () => {
 
   const [accessoriesData, setAccessoriesData] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>(false);
+  const [apiError, setApiError] = useState<boolean>(false);
 
   function handleLogout() {
     localStorage.removeItem('token');
@@ -34,7 +34,7 @@ const Accessories = () => {
         const res = await showVehicleAPI();
         setAccessoriesData(res.data.data);
       } catch (error) {
-        setError(true);
+        setApiError(true);
       } finally {
         setLoading(false);
       }
@@ -47,14 +47,14 @@ const Accessories = () => {
       const res = await addToCartAPI({ customerId, productId });
       alert(res.data.data.message)
     } catch (error) {
-      setError(true)
+      setApiError(true)
     }
   }
   return (
     <>
       <Header />
-      {error && (
-        <Modal />
+      {apiError && (
+        <Modal onClose={() => setApiError(false)} />
       )}
       <i className="fa-solid fa-cart-shopping" onClick={() => handleNavigate('/cart')} onKeyDown={() => handleNavigate('/cart')}></i>
       <button className='logout-btn' onClick={handleLogout}>Log out</button>

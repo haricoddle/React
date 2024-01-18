@@ -7,7 +7,7 @@ import Modal from '../../Modal/Modal';
 
 const EmpVehicles = () => {
 
-  const [error, setError] = useState<boolean>(false);
+  const [apiError, setApiError] = useState<boolean>(false);
 
   const [details, setDetails] = useState({
     typeId: '',
@@ -28,15 +28,15 @@ const EmpVehicles = () => {
         alert('Vehicle added successfully');
       }
     } catch (error) {
-      setError(true);
+      setApiError(true);
     }
   }
 
   return (
     <>
       <EmpHeader />
-      {error && (
-        <Modal />
+      {apiError && (
+        <Modal onClose={() => setApiError(false)} />
       )}
       <div className='emp-vehicle-container background-image-style'>
         <div className='add-vehicle-container'>

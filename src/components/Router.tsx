@@ -17,7 +17,6 @@ import Employee from './EmployeeSide/Employee/Employee';
 import EmpBookServive from './EmployeeSide/EmpBookService/EmpBookServive';
 import EmpAccessories from './EmployeeSide/EmpAccessories/EmpAccessories';
 import { Route, Routes } from 'react-router-dom';
-import Modal from './Modal/Modal';
 
 const Router = () => {
   return (
@@ -38,7 +37,6 @@ const Router = () => {
       <Route path='/empHome/vehicles' element={<EmpVehicles />} />
       <Route path='/empHome/customer' element={<EmpCustomer />} />
       <Route path='/empHome/employee' element={<Employee />} />
-      <Route path='/modal' element={<Modal />} />
     </Routes>
   )
 }

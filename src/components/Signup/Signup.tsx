@@ -16,7 +16,7 @@ type User = {
 
 const Signup = () => {
 
-    const [error, setError] = useState<boolean>(false);
+    const [apiError, setApiError] = useState<boolean>(false);
 
     const [details, setDetails] = useState<User>({
         name: '',
@@ -40,13 +40,13 @@ const Signup = () => {
                 alert('new user created');
             }
         } catch (error) {
-            setError(true);
+            setApiError(true);
         }
     }
     return (
         <div className='signup-div'>
-            {error && (
-                <Modal />
+            {apiError && (
+                <Modal onClose={() => setApiError(false)} />
             )}
             <figure>
                 <img src={img} alt="background" />

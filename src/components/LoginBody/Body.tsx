@@ -16,7 +16,7 @@ type User = {
 const Body = () => {
   const dispatch = useDispatch<AppDispatch>();
   const Navigate = useNavigate();
-  const [error, setError] = useState<boolean>(false);
+  const [apiError, setApiError] = useState<boolean>(false);
 
   const [details, setDetails] = useState<User>({
     userName: '',
@@ -50,16 +50,15 @@ const Body = () => {
       }))
       Navigate('/home');
     } catch (error) {
-      setError(true);
-      alert('try again');
+      setApiError(true);
     }
   }
 
   return (
 
     <div className='body-div'>
-      {error && (
-        <Modal />
+      {apiError && (
+        <Modal onClose={() => setApiError(false)} />
       )}
       <figure>
         <img src={img} alt="background" />

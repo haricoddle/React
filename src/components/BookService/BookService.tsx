@@ -25,7 +25,7 @@ const BookService = () => {
     Navigate('/');
   }
 
-  const [error, setError] = useState<boolean>(false);
+  const [apiError, setApiError] = useState<boolean>(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDetails({ ...details, [e.target.name]: e.target.value });
@@ -44,15 +44,15 @@ const BookService = () => {
         alert('Booking is successful');
       }
     } catch (error) {
-      setError(true);
+      setApiError(true);
     }
   }
 
   return (
     <>
       <Header />
-      {error && (
-        <Modal />
+      {apiError && (
+        <Modal onClose={() => setApiError(false)} />
       )}
       <i className="fa-solid fa-cart-shopping" onClick={() => handleNavigate('cart')} onKeyDown={() => handleNavigate('cart')}></i>
       <button className='logout-btn' onClick={handleLogout}>Logout</button>

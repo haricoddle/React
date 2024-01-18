@@ -9,7 +9,7 @@ const EmpBookServive = () => {
 
   const [bookingData, setBookingData] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>(false);
+  const [apiError, setApiError] = useState<boolean>(false);
 
   async function handleShowBookings() {
     setLoading(true);
@@ -17,7 +17,7 @@ const EmpBookServive = () => {
       const res = await serviceBookingsAPI();
       setBookingData(res.data.data);
     } catch (error) {
-      setError(true);
+      setApiError(true);
     } finally {
       setLoading(false)
     }
@@ -26,19 +26,19 @@ const EmpBookServive = () => {
   async function handleEditBooking(id: React.MouseEventHandler<HTMLButtonElement>) {
     try {
       const res = await editServiceBookingsAPI({ id });
-      if(res){
+      if (res) {
         alert('Booking edited successfully');
       }
     } catch (error) {
-      setError(true);
+      setApiError(true);
     }
   }
 
   return (
     <>
       <EmpHeader />
-      {error && (
-        <Modal />
+      {apiError && (
+        <Modal onClose={() => setApiError(false)} />
       )}
       <div className='service-booking-container background-image-style'>
         <div className='booking-details-container'>

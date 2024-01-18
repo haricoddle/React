@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import './Modal.css'
 
-const Modal = () => {
+type Props = {
+    onClose: () => void;
+}
+
+const Modal: React.FC<Props> = ({ onClose }) => {
 
     const [errorState, setErrorState] = useState<boolean>(true);
 
     const handleClose = () => {
         setErrorState(!errorState);
+        onClose();
     }
 
     return (

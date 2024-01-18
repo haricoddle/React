@@ -14,7 +14,7 @@ type User = {
 const EmpLogin = () => {
     const Navigate = useNavigate();
 
-    const [error, setError] = useState<boolean>(false);
+    const [apiError, setApiError] = useState<boolean>(false);
 
     const [details, setDetails] = useState<User>({
         userName: '',
@@ -32,7 +32,7 @@ const EmpLogin = () => {
             localStorage.setItem('token', res.data.token);
             Navigate('/empHome')
         } catch (error) {
-            setError(true);
+            setApiError(true);
             alert('try again')
         }
     }
@@ -40,8 +40,8 @@ const EmpLogin = () => {
     return (
 
         <>
-            {error && (
-                <Modal />
+            {apiError && (
+                <Modal onClose={() => setApiError(false)} />
             )}
             <div className='body-div'>
                 <figure>

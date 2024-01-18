@@ -9,7 +9,7 @@ const EmpCustomer = () => {
 
   const [customerData, setCustomerData] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>(false);
+  const [apiError, setApiError] = useState<boolean>(false);
 
   async function handleAddCustomer() {
     setLoading(true);
@@ -17,7 +17,7 @@ const EmpCustomer = () => {
       const res = await showCustomerAPI();
       setCustomerData(res.data.data);
     } catch (error) {
-      setError(true);
+      setApiError(true);
     } finally {
       setLoading(false)
     }
@@ -28,15 +28,15 @@ const EmpCustomer = () => {
       const res = await deleteCustomerAPI({ id });
       console.log(res)
     } catch (error) {
-      setError(true);
+      setApiError(true);
     }
   }
 
   return (
     <>
       <EmpHeader />
-      {error && (
-        <Modal />
+      {apiError && (
+        <Modal onClose={() => setApiError(false)} />
       )}
       <div className='customer-container background-image-style'>
         <div className='show-customer-container'>

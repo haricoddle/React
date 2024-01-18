@@ -19,7 +19,7 @@ type NewItems = {
 
 const EmpAccessories = () => {
 
-  const [error, setError] = useState<boolean>(false);
+  const [apiError, setApiError] = useState<boolean>(false);
 
   const [details, setDetails] = useState<NewItems>({
     accessoryId: '',
@@ -44,11 +44,11 @@ const EmpAccessories = () => {
   async function handleAddAccessory() {
     try {
       const res = await addPartsAPI(details);
-      if(res){
+      if (res) {
         alert('Accessory added successfully');
       }
     } catch (error) {
-      setError(true);
+      setApiError(true);
     }
   }
 
@@ -58,7 +58,7 @@ const EmpAccessories = () => {
       const res = await updatePartsAPI(itemDetails);
       console.log(res);
     } catch (error) {
-      setError(true);
+      setApiError(true);
     }
     console.log(itemDetails);
   }
@@ -66,8 +66,8 @@ const EmpAccessories = () => {
   return (
     <>
       <EmpHeader />
-      {error && (
-        <Modal />
+      {apiError && (
+        <Modal onClose={() => setApiError(false)} />
       )}
       <div className='emp-accessory accessories-container'>
 

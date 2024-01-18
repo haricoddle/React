@@ -18,7 +18,7 @@ type BookingDetails = {
 const Booking = () => {
     const vehicleData = useSelector((state: RootState) => state.vehicles);
 
-    const [error, setError] = useState<boolean>(false);
+    const [apiError, setApiError] = useState<boolean>(false);
 
 
     const [details, setDetails] = useState<BookingDetails>({
@@ -45,15 +45,15 @@ const Booking = () => {
                 alert('booking added successfully');
             }
         } catch (error) {
-            setError(true);
+            setApiError(true);
         }
     }
 
     return (
         <>
             <Header />
-            {error && (
-                <Modal />
+            {apiError && (
+                <Modal onClose={() => setApiError(false)} />
             )}
             <div className="main-booking-div ">
                 <figure className='booking-div-bg-img'>

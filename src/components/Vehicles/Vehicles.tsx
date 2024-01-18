@@ -12,7 +12,7 @@ import Modal from '../Modal/Modal';
 const Vehicles = () => {
     const Navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
-    const [error, setError] = useState<boolean>(false);
+    const [apiError, setApiError] = useState<boolean>(false);
 
 
     const [vehicleData, setVehicleData] = useState([]);
@@ -27,7 +27,7 @@ const Vehicles = () => {
                 setVehicleData(data);
                 dispatch(setVehicleDetails(data));
             } catch (error) {
-                setError(true);
+                setApiError(true);
             } finally {
                 setLoading(false);
             }
@@ -50,8 +50,8 @@ const Vehicles = () => {
     return (
         <>
             <Header />
-            {error && (
-                <Modal />
+            {apiError && (
+                <Modal onClose={() => setApiError(false)} />
             )}
             <i className="fa-solid fa-cart-shopping" onClick={() => handleCart('/cart')} onKeyDown={() => handleCart('/cart')}></i>
             <button className='logout-btn' onClick={handleLogout}>Logout</button>
