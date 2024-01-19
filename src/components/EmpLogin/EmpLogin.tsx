@@ -33,7 +33,6 @@ const EmpLogin = () => {
             Navigate('/empHome')
         } catch (error) {
             setApiError(true);
-            alert('try again')
         }
     }
 

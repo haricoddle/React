@@ -26,7 +26,9 @@ const EmpCustomer = () => {
   async function handleDeleteCustomer(id: React.MouseEventHandler<HTMLButtonElement>) {
     try {
       const res = await deleteCustomerAPI({ id });
-      console.log(res)
+      if (res){
+        alert('Customer is deleted');
+      }
     } catch (error) {
       setApiError(true);
     }

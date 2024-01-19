@@ -56,7 +56,9 @@ const EmpAccessories = () => {
   async function handleEditAccessory() {
     try {
       const res = await updatePartsAPI(itemDetails);
-      console.log(res);
+      if (res) {
+        alert('Accessory added successfully');
+      }
     } catch (error) {
       setApiError(true);
     }
