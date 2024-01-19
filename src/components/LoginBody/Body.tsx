@@ -1,0 +1,95 @@
+import React, { FormEvent, useEffect, useState } from 'react';
+import img from '../../images/bg-image.jpg';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setUserDetails } from '../../Redux/UserSlice';
+import './Body.css';
+import { AppDispatch } from '../../Redux/Store';
+import { apiRequest } from '../../HelperFunction/helperFunction';
+
+type User = {
+  userName: string,
+  password: string
+}
+
+const Body = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const Navigate = useNavigate();
+
+  const [details, setDetails] = useState<User>({
+    userName: '',
+    password: '',
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDetails({ ...details, [e.target.name]: e.target.value })
+  }
+
+  function handleSignup() {
+    Navigate('/signup')
+  }
+
+  function handleEmployeeLogin() {
+    Navigate('/emplogin')
+  }
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      Navigate('/home');
+    }
+  })
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    try {
+      const res = await apiRequest(`${process.env.REACT_APP_URL}/customer/login`, 'post', details);
+      localStorage.setItem('token', res.data.token);
+      dispatch(setUserDetails({
+        id: res.data.data.id,
+        name: res.data.data.name,
+        roles: res.data.data.roles,
+        userName: res.data.data.username
+      }))
+      Navigate('/home');
+    } catch (error) {
+      alert('try again');
+    }
+  }
+
+  return (
+
+    <div className='body-div'>
+      <figure>
+        <img src={img} alt="background" />
+        <p className='caption-p'>START YOUR <br /> RIDE WITH US....</p>
+      </figure>
+
+      <div className='user-login-div'>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="userName">Username</label>
+            <input type="text" name="userName" id="username" placeholder='Username' onChange={handleChange} required />
+          </div>
+
+          <div>
+            <label htmlFor="password">Password</label>
+            <input type="password" name="password" id="password" placeholder='Password' onChange={handleChange} required />
+          </div>
+
+          <button id='login-btn'>LOGIN</button>
+
+          <div id='login-err-mesg' className='err-mesg-style'></div>
+        </form>
+        <div className='signup-div'>
+          <p>Don't have an account? <span className='span' id="signup-span" onClick={handleSignup} onKeyDown={handleSignup}> Sign up</span></p>
+        </div>
+        <div>
+          <button className='emp-login'>Employee ?<span className='span' onClick={handleEmployeeLogin} onKeyDown={handleEmployeeLogin}> login</span></button>
+        </div>
+      </div>
+    </div>
+
+  );
+};
+
+export default Body;

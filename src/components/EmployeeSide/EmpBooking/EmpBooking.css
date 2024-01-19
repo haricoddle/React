@@ -1,0 +1,40 @@
+.vehicle-booking-container{
+    background-image: url(../../../images/book-bike.jpg);
+button{
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    margin-block: 20px;
+}
+}
+.booking-details{
+    margin-inline: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(128, 128, 128, 0.764);
+    p{
+        font-size: 1.1rem;
+        font-weight: 500;
+        padding-top: 5px;
+    }
+}
+
+.booking-details-div{
+    background-color: rgba(128, 128, 128, 0.759);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 350px;
+    margin-block: 16px;
+}
+#show-bookings{
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 2rem;
+}
+.edit-booking-status{
+    background-color: rgba(50, 50, 230, 0.762);
+}
