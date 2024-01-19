@@ -1,10 +1,7 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import img from '../../images/bg-image.jpg';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { setUserDetails } from '../../Redux/UserSlice';
 import './Body.css';
-import { AppDispatch } from '../../Redux/Store';
 import { loginAPI } from '../../API/UserSide';
 import Modal from '../Modal/Modal';
 
@@ -14,7 +11,6 @@ type User = {
 }
 
 const Body = () => {
-  const dispatch = useDispatch<AppDispatch>();
   const Navigate = useNavigate();
   const [apiError, setApiError] = useState<boolean>(false);
 
@@ -42,12 +38,6 @@ const Body = () => {
     try {
       const res = await loginAPI(details);
       localStorage.setItem('token', res.data.token);
-      dispatch(setUserDetails({
-        id: res.data.data.id,
-        name: res.data.data.name,
-        roles: res.data.data.roles,
-        userName: res.data.data.username
-      }))
       Navigate('/home');
     } catch (error) {
       setApiError(true);
