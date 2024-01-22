@@ -41,11 +41,11 @@ const Booking = () => {
     }, [])
 
     const handleDataChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setDetails({ ...details, [e.target.name]: e.target.value })
+        setDetails({ ...details, [e.target.name]: e.target.value.trim() })
     }
 
     const handleSelectDataChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setDetails({ ...details, [e.target.name]: e.target.value })
+        setDetails({ ...details, [e.target.name]: e.target.value.trim() })
     }
 
     async function handleBoking(event: FormEvent<HTMLFormElement>) {
