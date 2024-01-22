@@ -1,10 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import userReducer from './UserSlice';
 import vehicleReduser from './VehicleSlice';
 
 const store = configureStore({
     reducer: {
-        user: userReducer,
         vehicles: vehicleReduser,
     }
 })

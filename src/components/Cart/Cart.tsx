@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import Header from '../Header';
 import Footer from '../Footer';
 import { useNavigate } from 'react-router-dom';
 import './Cart.css'
-import { RootState } from '../../Redux/Store';
 import { showCartAPI } from '../../API/UserSide';
 import Modal from '../Modal/Modal';
 
@@ -13,15 +11,13 @@ const Cart = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [apiError, setApiError] = useState<boolean>(false);
 
-  const { id } = useSelector((state: RootState) => state.user);
-
   const [cartData, setCartData] = useState([]);
 
   useEffect(() => {
     setLoading(true);
     const fetchData = async () => {
       try {
-        const res = await showCartAPI({ id });
+        const res = await showCartAPI();
         const data = res.data.data;
         setCartData(data);
       } catch (error) {

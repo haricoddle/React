@@ -24,8 +24,8 @@ export const serviceBookingAPI = async (body: any) => {
     const res = await apiRequest('/service/booking','post',body);
     return res;
 }
-export const showCartAPI = async (body: any) => {
-    const res = await apiRequest('/cart/showCart','post',body);
+export const showCartAPI = async () => {
+    const res = await apiRequest('/cart/showCart','post');
     return res;
 }
 
