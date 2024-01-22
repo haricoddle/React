@@ -10,6 +10,8 @@ const EmpBooking = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [apiError, setApiError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
 
 
   async function handleShowBookings() {
@@ -17,7 +19,8 @@ const EmpBooking = () => {
     try {
       const res = await showBookingsAPI();
       setBookings(res.data.data);
-    } catch (error) {
+    } catch (error: any) {
+      setErrorMessage(error.response.data.error);
       setApiError(true);
     } finally {
       setLoading(false)
@@ -30,7 +33,8 @@ const EmpBooking = () => {
       if (res) {
         alert('Booking deleted successfully');
       }
-    } catch (error) {
+    } catch (error: any) {
+      setErrorMessage(error.response.data.error);
       setApiError(true);
     }
   }
@@ -39,7 +43,7 @@ const EmpBooking = () => {
     <>
       <EmpHeader />
       {apiError && (
-        <Modal onClose={() => setApiError(false)} />
+        <Modal onClose={() => setApiError(false)} errorMessage={errorMessage} />
       )}
       <div className='vehicle-booking-container background-image-style'>
         <div className='booking-details'>

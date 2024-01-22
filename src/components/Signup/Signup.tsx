@@ -17,6 +17,7 @@ type User = {
 const Signup = () => {
 
     const [apiError, setApiError] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const [details, setDetails] = useState<User>({
         name: '',
@@ -28,7 +29,7 @@ const Signup = () => {
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setDetails({ ...details, [e.target.name]: e.target.value })
+        setDetails({ ...details, [e.target.name]: e.target.value.trim() })
     }
 
     async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -39,14 +40,15 @@ const Signup = () => {
             if (res) {
                 alert('new user created');
             }
-        } catch (error) {
+        } catch (error: any) {
+            setErrorMessage(error.response.data.error);
             setApiError(true);
         }
     }
     return (
         <div className='signup-div'>
             {apiError && (
-                <Modal onClose={() => setApiError(false)} />
+                <Modal onClose={() => setApiError(false)} errorMessage={errorMessage} />
             )}
             <figure>
                 <img src={img} alt="background" />

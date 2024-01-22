@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../Header';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import './Accessories.css'
 import Footer from '../Footer';
 import { addToCartAPI, showVehicleAPI } from '../../API/UserSide';
@@ -10,11 +9,11 @@ import Modal from '../Modal/Modal';
 const Accessories = () => {
   const Navigate = useNavigate();
 
-  const customerId = useSelector((state: any) => state.user.id);
-
   const [accessoriesData, setAccessoriesData] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [apiError, setApiError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
 
   function handleLogout() {
     localStorage.removeItem('token');
@@ -33,7 +32,8 @@ const Accessories = () => {
       try {
         const res = await showVehicleAPI();
         setAccessoriesData(res.data.data);
-      } catch (error) {
+      } catch (error: any) {
+        setErrorMessage(error.response.data.error);
         setApiError(true);
       } finally {
         setLoading(false);
@@ -44,9 +44,11 @@ const Accessories = () => {
 
   async function handleAddToCart(productId: string) {
     try {
-      const res = await addToCartAPI({ customerId, productId });
-      alert(res.data.data.message)
-    } catch (error) {
+      const res = await addToCartAPI({ productId });
+      alert(res.data.message)
+    } catch (error: any) {
+      setErrorMessage(error.response.data.error);
+      console.log(error);
       setApiError(true)
     }
   }
@@ -54,7 +56,7 @@ const Accessories = () => {
     <>
       <Header />
       {apiError && (
-        <Modal onClose={() => setApiError(false)} />
+        <Modal onClose={() => setApiError(false)} errorMessage={errorMessage} />
       )}
       <i className="fa-solid fa-cart-shopping" onClick={() => handleNavigate('/cart')} onKeyDown={() => handleNavigate('/cart')}></i>
       <button className='logout-btn' onClick={handleLogout}>Log out</button>

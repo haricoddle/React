@@ -14,6 +14,8 @@ type Details = {
 
 const BookService = () => {
   const Navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState('');
+
   const [details, setDetails] = useState<Details>({
     modelName: '',
     date: '',
@@ -43,7 +45,8 @@ const BookService = () => {
       if (res) {
         alert('Booking is successful');
       }
-    } catch (error) {
+    } catch (error: any) {
+      setErrorMessage(error.response.data.error);
       setApiError(true);
     }
   }
@@ -52,7 +55,7 @@ const BookService = () => {
     <>
       <Header />
       {apiError && (
-        <Modal onClose={() => setApiError(false)} />
+        <Modal onClose={() => setApiError(false)} errorMessage={errorMessage} />
       )}
       <i className="fa-solid fa-cart-shopping" onClick={() => handleNavigate('cart')} onKeyDown={() => handleNavigate('cart')}></i>
       <button className='logout-btn' onClick={handleLogout}>Logout</button>

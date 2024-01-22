@@ -3,13 +3,14 @@ import Header from '../Header';
 import Footer from '../Footer';
 import { useNavigate } from 'react-router-dom';
 import './Cart.css'
-import { showCartAPI } from '../../API/UserSide';
+import { decrementCartAPI, incrementCartAPI, showCartAPI } from '../../API/UserSide';
 import Modal from '../Modal/Modal';
 
 const Cart = () => {
   const Navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
   const [apiError, setApiError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const [cartData, setCartData] = useState([]);
 
@@ -19,8 +20,10 @@ const Cart = () => {
       try {
         const res = await showCartAPI();
         const data = res.data.data;
+        console.log(data);
         setCartData(data);
-      } catch (error) {
+      } catch (error: any) {
+        setErrorMessage(error.response.data.error);
         setApiError(true);
       } finally {
         setLoading(false)
@@ -39,11 +42,37 @@ const Cart = () => {
     Navigate(path)
   }
 
+  async function handleCartDecrement(cartId: string) {
+    console.log(cartId);
+    try {
+      const res = await decrementCartAPI({ cartId });
+      if (res) {
+        alert('quantity decremented');
+      }
+    } catch (error: any) {
+      setErrorMessage(error.response.data.error);
+      setApiError(true);
+    }
+  }
+
+  async function handleCartIncrement(cartId: string) {
+    console.log(cartId);
+    try {
+      const res = await incrementCartAPI({ cartId });
+      if (res) {
+        alert('quantity Incremented');
+      }
+    } catch (error: any) {
+      setErrorMessage(error.response.data.error);
+      setApiError(true);
+    }
+  }
+
   return (
     <>
       <Header />
       {apiError && (
-        <Modal onClose={() => setApiError(false)} />
+        <Modal onClose={() => setApiError(false)} errorMessage={errorMessage} />
       )}
       <button className='logout-btn' onClick={handleLogout}>Logout</button>
       <h2 className='heading'>--Cart--</h2>
@@ -64,9 +93,9 @@ const Cart = () => {
                     <p>{data.name}</p>
                     <p>Price:- {data.price}</p>
                     <div className='qty-div'>
-                      <button> + </button>
+                      <button onClick={() => handleCartDecrement(data.id)}> - </button>
                       <p> Qty:- {data.quantity}</p>
-                      <button> - </button>
+                      <button onClick={() => handleCartIncrement(data.id)}> + </button>
                     </div>
                   </div>
                 </div>

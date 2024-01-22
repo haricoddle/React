@@ -20,6 +20,7 @@ type NewItems = {
 const EmpAccessories = () => {
 
   const [apiError, setApiError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const [details, setDetails] = useState<NewItems>({
     accessoryId: '',
@@ -29,7 +30,7 @@ const EmpAccessories = () => {
   })
 
   const handleItemChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDetails({ ...details, [e.target.name]: e.target.value })
+    setDetails({ ...details, [e.target.name]: e.target.value.trim() })
   }
 
   const [itemDetails, setItemDetails] = useState<Items>({
@@ -38,7 +39,7 @@ const EmpAccessories = () => {
   })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setItemDetails({ ...itemDetails, [e.target.name]: e.target.value })
+    setItemDetails({ ...itemDetails, [e.target.name]: e.target.value.trim() })
   }
 
   async function handleAddAccessory() {
@@ -47,7 +48,8 @@ const EmpAccessories = () => {
       if (res) {
         alert('Accessory added successfully');
       }
-    } catch (error) {
+    } catch (error: any) {
+      setErrorMessage(error.response.data.error);
       setApiError(true);
     }
   }
@@ -59,7 +61,8 @@ const EmpAccessories = () => {
       if (res) {
         alert('Accessory added successfully');
       }
-    } catch (error) {
+    } catch (error: any) {
+      setErrorMessage(error.response.data.error);
       setApiError(true);
     }
     console.log(itemDetails);
@@ -69,7 +72,7 @@ const EmpAccessories = () => {
     <>
       <EmpHeader />
       {apiError && (
-        <Modal onClose={() => setApiError(false)} />
+        <Modal onClose={() => setApiError(false)} errorMessage={errorMessage} />
       )}
       <div className='emp-accessory accessories-container'>
 

@@ -18,6 +18,7 @@ type User = {
 const Employee = () => {
 
   const [apiError, setApiError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const [details, setDetails] = useState<User>({
     deptId: '',
@@ -30,7 +31,7 @@ const Employee = () => {
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDetails({ ...details, [e.target.name]: e.target.value })
+    setDetails({ ...details, [e.target.name]: e.target.value.trim() })
   }
 
   async function handleAdd(event: FormEvent<HTMLFormElement>) {
@@ -40,7 +41,8 @@ const Employee = () => {
       if (res) {
         alert('New employee added successfully.');
       }
-    } catch (error) {
+    } catch (error: any) {
+      setErrorMessage(error.response.data.error);
       setApiError(true);
     }
   }
@@ -50,7 +52,7 @@ const Employee = () => {
     <>
       <EmpHeader />
       {apiError && (
-        <Modal onClose={() => setApiError(false)} />
+        <Modal onClose={() => setApiError(false)} errorMessage={errorMessage} />
       )}
       <div className='employee-container background-image-style'>
         <div className='add-employee-container'>

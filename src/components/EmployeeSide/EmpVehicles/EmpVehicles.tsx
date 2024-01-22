@@ -8,6 +8,7 @@ import Modal from '../../Modal/Modal';
 const EmpVehicles = () => {
 
   const [apiError, setApiError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const [details, setDetails] = useState({
     typeId: '',
@@ -18,7 +19,7 @@ const EmpVehicles = () => {
   })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDetails({ ...details, [e.target.name]: e.target.value })
+    setDetails({ ...details, [e.target.name]: e.target.value.trim() })
   }
 
   async function handleAdd() {
@@ -27,7 +28,8 @@ const EmpVehicles = () => {
       if (res) {
         alert('Vehicle added successfully');
       }
-    } catch (error) {
+    } catch (error: any) {
+      setErrorMessage(error.response.data.error);
       setApiError(true);
     }
   }
@@ -36,7 +38,7 @@ const EmpVehicles = () => {
     <>
       <EmpHeader />
       {apiError && (
-        <Modal onClose={() => setApiError(false)} />
+        <Modal onClose={() => setApiError(false)} errorMessage={errorMessage} />
       )}
       <div className='emp-vehicle-container background-image-style'>
         <div className='add-vehicle-container'>

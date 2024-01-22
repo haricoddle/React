@@ -13,6 +13,7 @@ const Vehicles = () => {
     const Navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     const [apiError, setApiError] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
 
     const [vehicleData, setVehicleData] = useState([]);
@@ -26,7 +27,8 @@ const Vehicles = () => {
                 const data = res.data.data;
                 setVehicleData(data);
                 dispatch(setVehicleDetails(data));
-            } catch (error) {
+            } catch (error: any) {
+                setErrorMessage(error.response.data.error);
                 setApiError(true);
             } finally {
                 setLoading(false);
@@ -51,7 +53,7 @@ const Vehicles = () => {
         <>
             <Header />
             {apiError && (
-                <Modal onClose={() => setApiError(false)} />
+                <Modal onClose={() => setApiError(false)} errorMessage={errorMessage} />
             )}
             <i className="fa-solid fa-cart-shopping" onClick={() => handleCart('/cart')} onKeyDown={() => handleCart('/cart')}></i>
             <button className='logout-btn' onClick={handleLogout}>Logout</button>
@@ -60,11 +62,10 @@ const Vehicles = () => {
                 {vehicleData.map((data: any) => (
                     <div key={data?.index}>
                         <div key={data.id} className='vehicle-div'>
-                            <p>Model : - {data.model_name}</p>
-                            <p>CC : -{data.cc}</p>
-                            <p>Price (Ex-Showroom) : - {data.price}</p>
+                            <p>Model :- {data.model_name}</p>
+                            <p>CC :- {data.cc}</p>
+                            <p>Price (Ex-Showroom) :- {data.price}</p>
                             <img src={`http://localhost:3001/profile/${data.image_url}`} alt="vehicles" className='vehicle-img' />
-                            <button> Show more</button>
                         </div>
                     </div>
                 ))}

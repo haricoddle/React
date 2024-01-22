@@ -23,6 +23,7 @@
     font-weight: bold;
     font-style: italic;
     color: rgba(35, 52, 52, 0.922);
+    border-radius: 25px;
     img{
       height: 300px;
       width: 410px;
@@ -37,4 +38,15 @@
         font-size: 1rem;
     }
   }
-  
+  .details-div{
+    z-index: 8;
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .vehicle-img{
+    padding-bottom: 16px;
+    border-radius: 25px;
+  }

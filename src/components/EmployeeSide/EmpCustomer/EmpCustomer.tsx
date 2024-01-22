@@ -10,13 +10,15 @@ const EmpCustomer = () => {
   const [customerData, setCustomerData] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [apiError, setApiError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   async function handleAddCustomer() {
     setLoading(true);
     try {
       const res = await showCustomerAPI();
       setCustomerData(res.data.data);
-    } catch (error) {
+    } catch (error: any) {
+      setErrorMessage(error.response.data.error);
       setApiError(true);
     } finally {
       setLoading(false)
@@ -26,10 +28,11 @@ const EmpCustomer = () => {
   async function handleDeleteCustomer(id: React.MouseEventHandler<HTMLButtonElement>) {
     try {
       const res = await deleteCustomerAPI({ id });
-      if (res){
+      if (res) {
         alert('Customer is deleted');
       }
-    } catch (error) {
+    } catch (error: any) {
+      setErrorMessage(error.response.data.error);
       setApiError(true);
     }
   }
@@ -38,7 +41,7 @@ const EmpCustomer = () => {
     <>
       <EmpHeader />
       {apiError && (
-        <Modal onClose={() => setApiError(false)} />
+        <Modal onClose={() => setApiError(false)} errorMessage={errorMessage} />
       )}
       <div className='customer-container background-image-style'>
         <div className='show-customer-container'>

@@ -13,6 +13,8 @@ type User = {
 
 const EmpLogin = () => {
     const Navigate = useNavigate();
+    const [errorMessage, setErrorMessage] = useState('');
+
 
     const [apiError, setApiError] = useState<boolean>(false);
 
@@ -31,7 +33,8 @@ const EmpLogin = () => {
             const res = await employeeloginAPI(details);
             localStorage.setItem('token', res.data.token);
             Navigate('/empHome')
-        } catch (error) {
+        } catch (error: any) {
+            setErrorMessage(error.response.data.error);
             setApiError(true);
         }
     }
@@ -40,7 +43,7 @@ const EmpLogin = () => {
 
         <>
             {apiError && (
-                <Modal onClose={() => setApiError(false)} />
+                <Modal onClose={() => setApiError(false)} errorMessage={errorMessage} />
             )}
             <div className='body-div'>
                 <figure>

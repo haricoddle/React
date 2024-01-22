@@ -3,9 +3,10 @@ import './Modal.css'
 
 type Props = {
     onClose: () => void;
+    errorMessage: any,
 }
 
-const Modal: React.FC<Props> = ({ onClose }) => {
+const Modal: React.FC<Props> = ({ onClose, errorMessage }) => {
 
     const [errorState, setErrorState] = useState<boolean>(true);
 
@@ -23,7 +24,7 @@ const Modal: React.FC<Props> = ({ onClose }) => {
                             <p className='modal-error-heading'>Error Occured</p>
                         </div>
                         <div className='modal-error-text'>
-                            Please try again.
+                            {errorMessage}
                         </div><button onClick={handleClose}>Close</button>
                     </div>
                 </div>

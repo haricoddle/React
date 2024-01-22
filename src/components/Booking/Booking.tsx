@@ -1,11 +1,9 @@
-import React, { FormEvent, useState } from 'react'
+import React, { FormEvent, useEffect, useState } from 'react'
 import img from '../../images/book-bike.jpg'
 import Header from '../Header'
 import Footer from '../Footer'
 import './Booking.css'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../Redux/Store'
-import { newBookingAPI } from '../../API/UserSide'
+import { newBookingAPI, showVehiclesAPI } from '../../API/UserSide'
 import Modal from '../Modal/Modal'
 
 type BookingDetails = {
@@ -16,10 +14,10 @@ type BookingDetails = {
 }
 
 const Booking = () => {
-    const vehicleData = useSelector((state: RootState) => state.vehicles);
 
     const [apiError, setApiError] = useState<boolean>(false);
-
+    const [errorMessage, setErrorMessage] = useState('');
+    const [vehicleData, setVehicleData] = useState([]);
 
     const [details, setDetails] = useState<BookingDetails>({
         customerName: '',
@@ -27,6 +25,20 @@ const Booking = () => {
         location: '',
         vehicle: '',
     });
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await showVehiclesAPI();
+                const data = res.data.data;
+                setVehicleData(data);
+            } catch (error: any) {
+                setErrorMessage(error.response.data.error);
+                setApiError(true);
+            }
+        }
+        fetchData();
+    }, [])
 
     const handleDataChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setDetails({ ...details, [e.target.name]: e.target.value })
@@ -44,7 +56,8 @@ const Booking = () => {
             if (res) {
                 alert('booking added successfully');
             }
-        } catch (error) {
+        } catch (error: any) {
+            setErrorMessage(error.response.data.error);
             setApiError(true);
         }
     }
@@ -53,7 +66,7 @@ const Booking = () => {
         <>
             <Header />
             {apiError && (
-                <Modal onClose={() => setApiError(false)} />
+                <Modal onClose={() => setApiError(false)} errorMessage={errorMessage} />
             )}
             <div className="main-booking-div ">
                 <figure className='booking-div-bg-img'>

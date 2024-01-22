@@ -38,3 +38,12 @@ export const showVehiclesAPI = async () => {
     const res = await apiRequest('/vehicle/allVehicles','get');
     return res;
 }
+
+export const decrementCartAPI = async (body: any) => {
+    const res = await apiRequest('/cart/deleteeQuantity', 'post', body);
+    return res;
+}
+export const incrementCartAPI = async (body: any) => {
+    const res = await apiRequest('/cart/adddQuantity', 'post', body);
+    return res;
+}
