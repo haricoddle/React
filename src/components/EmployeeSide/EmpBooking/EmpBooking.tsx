@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Footer from '../../Footer'
 import EmpHeader from '../EmpHeader/EmpHeader'
 import './EmpBooking.css'
@@ -11,26 +11,30 @@ const EmpBooking = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [apiError, setApiError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [status, setStatus] = useState<boolean>(false);
 
-
-
-  async function handleShowBookings() {
-    setLoading(true);
-    try {
-      const res = await showBookingsAPI();
-      setBookings(res.data.data);
-    } catch (error: any) {
-      setErrorMessage(error.response.data.error);
-      setApiError(true);
-    } finally {
-      setLoading(false)
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const res = await showBookingsAPI();
+        setBookings(res.data.data);
+      } catch (error: any) {
+        setErrorMessage(error.response.data.error);
+        setApiError(true);
+      } finally {
+        setLoading(false)
+      }
     }
-  }
+    fetchData();
+  }, [status]);
 
   async function handleDeleteBookings(id: React.MouseEventHandler<HTMLButtonElement>) {
     try {
       const res = await deleteBookingsAPI({ id });
       if (res) {
+        console.log(res);
+        setStatus(!status);
         alert('Booking deleted successfully');
       }
     } catch (error: any) {
@@ -47,8 +51,7 @@ const EmpBooking = () => {
       )}
       <div className='vehicle-booking-container background-image-style'>
         <div className='booking-details'>
-          <p className='headings'>Show all Bookings</p>
-          <button onClick={handleShowBookings}>Show vehicle bookings</button>
+          <p className='headings'>Vehicle Bookings</p>
           <div id='show-bookings'>
             {loading && <p className='loading-mesg'>Loading....</p>}
             {bookings.map((data: any) => (

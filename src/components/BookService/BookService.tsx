@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Footer from '../Footer';
 import Header from '../Header';
 import { useNavigate } from 'react-router-dom';
 import './BookService.css';
-import { serviceBookingAPI } from '../../API/UserSide';
+import { serviceBookingAPI, showVehiclesAPI } from '../../API/UserSide';
 import Modal from '../Modal/Modal';
 
 type Details = {
@@ -15,6 +15,7 @@ type Details = {
 const BookService = () => {
   const Navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('');
+  const [vehicleData, setVehicleData] = useState([]);
 
   const [details, setDetails] = useState<Details>({
     modelName: '',
@@ -31,6 +32,10 @@ const BookService = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDetails({ ...details, [e.target.name]: e.target.value.trim() });
+  }
+
+  const handleSelectDataChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setDetails({ ...details, [e.target.name]: e.target.value.trim() })
   }
 
   function handleNavigate(path: string) {
@@ -50,6 +55,20 @@ const BookService = () => {
     }
   }
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await showVehiclesAPI();
+        const data = res.data.data;
+        setVehicleData(data);
+      } catch (error: any) {
+        setErrorMessage(error.response.data.error);
+        setApiError(true);
+      }
+    }
+    fetchData();
+  }, [])
+
   return (
     <>
       <Header />
@@ -65,8 +84,13 @@ const BookService = () => {
             <input type="date" name='date' id='date' onChange={handleChange} min={new Date().toISOString().split("T")[0]} required />
           </div>
           <div>
-            <label htmlFor="modelName">Vehicle Model :- </label>
-            <input type="text" name='modelName' id='modelName' onChange={handleChange} required />
+            <label htmlFor="vehicle">Choose the vehicle</label>
+            <select name="vehicle" id="vehicle" onChange={handleSelectDataChange} required>
+              <option value="">Select a option</option>
+              {vehicleData.map((data: any) => (
+                <option key={data.id} value={data.model_name}>{data.model_name}</option>
+              ))}
+            </select>
           </div>
           <div>
             <label htmlFor="issueFaced">Enter the issue Faced :- </label>

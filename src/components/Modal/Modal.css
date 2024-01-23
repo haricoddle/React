@@ -1,8 +1,8 @@
 .modal-inner-container{
     padding: 0;
     margin: 0;
-    height: 100vh;
     position: absolute;
+    height: 100%;
     z-index: 6;
     width: 100%;
     background-color: rgba(128, 128, 128, 0.364);

@@ -1,22 +1,22 @@
 import { apiRequest } from "../HelperFunction/helperFunction";
 
 export const employeeloginAPI = async (body: any) => {
-  const res = await apiRequest('/employee/empLogin','post', body);
+  const res = await apiRequest('/employee/empLogin', 'post', body);
   return res;
 }
 
 export const addPartsAPI = async (body: any) => {
-  const res = await apiRequest('/parts/addParts','post', body);
+  const res = await apiRequest('/parts/addParts', 'post', body);
   return res;
 }
 
 export const updatePartsAPI = async (body: any) => {
-  const res = await apiRequest('/parts/updatePartQuery','put', body);
+  const res = await apiRequest('/parts/updateParts', 'put', body);
   return res;
 }
 
 export const showBookingsAPI = async () => {
-  const res = await apiRequest('/bookings/showBookings','get');
+  const res = await apiRequest('/bookings/showBookings', 'get');
   return res;
 }
 

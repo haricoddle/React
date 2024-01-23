@@ -79,7 +79,7 @@ const EmpAccessories = () => {
         <div>
           <div className='add-content-area'>
             <p>Add Accessory</p>
-            <form>
+            <form className='add-accessory-form'>
               <label htmlFor="accessoryId">Accessory id</label>
               <input type="text" name="accessoryId" placeholder='Accessory Id' onChange={handleItemChange} />
 

@@ -11,6 +11,7 @@ const Cart = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [apiError, setApiError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [status, setStatus] = useState<boolean>(false);
 
   const [cartData, setCartData] = useState([]);
 
@@ -20,7 +21,6 @@ const Cart = () => {
       try {
         const res = await showCartAPI();
         const data = res.data.data;
-        console.log(data);
         setCartData(data);
       } catch (error: any) {
         setErrorMessage(error.response.data.error);
@@ -31,7 +31,7 @@ const Cart = () => {
     }
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [status]);
 
   function handleLogout() {
     localStorage.removeItem('token');
@@ -43,11 +43,10 @@ const Cart = () => {
   }
 
   async function handleCartDecrement(cartId: string) {
-    console.log(cartId);
     try {
       const res = await decrementCartAPI({ cartId });
       if (res) {
-        alert('quantity decremented');
+        setStatus(!status);
       }
     } catch (error: any) {
       setErrorMessage(error.response.data.error);
@@ -56,11 +55,10 @@ const Cart = () => {
   }
 
   async function handleCartIncrement(cartId: string) {
-    console.log(cartId);
     try {
       const res = await incrementCartAPI({ cartId });
       if (res) {
-        alert('quantity Incremented');
+        setStatus(!status);
       }
     } catch (error: any) {
       setErrorMessage(error.response.data.error);

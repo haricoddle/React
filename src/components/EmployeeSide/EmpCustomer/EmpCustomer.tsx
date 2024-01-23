@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Footer from '../../Footer'
 import EmpHeader from '../EmpHeader/EmpHeader'
 import './EmpCustomer.css';
@@ -11,24 +11,29 @@ const EmpCustomer = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [apiError, setApiError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [status, setStatus] = useState<boolean>(false);
 
-  async function handleAddCustomer() {
-    setLoading(true);
-    try {
-      const res = await showCustomerAPI();
-      setCustomerData(res.data.data);
-    } catch (error: any) {
-      setErrorMessage(error.response.data.error);
-      setApiError(true);
-    } finally {
-      setLoading(false)
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const res = await showCustomerAPI();
+        setCustomerData(res.data.data);
+      } catch (error: any) {
+        setErrorMessage(error.response.data.error);
+        setApiError(true);
+      } finally {
+        setLoading(false)
+      }
     }
-  }
+    fetchData();
+  }, [])
 
   async function handleDeleteCustomer(id: React.MouseEventHandler<HTMLButtonElement>) {
     try {
       const res = await deleteCustomerAPI({ id });
       if (res) {
+        setStatus(!status);
         alert('Customer is deleted');
       }
     } catch (error: any) {
@@ -45,7 +50,6 @@ const EmpCustomer = () => {
       )}
       <div className='customer-container background-image-style'>
         <div className='show-customer-container'>
-          <button onClick={handleAddCustomer}>Show all customer</button>
           <div className='cust-details'>
             {loading && <p className='loading-mesg'>Loading....</p>}
             {customerData.map((data: any) => (

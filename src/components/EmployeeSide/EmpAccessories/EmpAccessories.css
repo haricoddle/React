@@ -1,5 +1,5 @@
 .emp-accessory{
-    height: 500px;
+    grid-template-columns: auto;
 }
 .add-content-area{
     display: flex;
@@ -20,4 +20,8 @@
         border-radius: 10px;
         border: none;
     }
+}
+.add-accessory-form{
+    display: flex;
+    flex-direction: column;
 }

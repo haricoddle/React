@@ -15,7 +15,6 @@ const Vehicles = () => {
     const [apiError, setApiError] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState('');
 
-
     const [vehicleData, setVehicleData] = useState([]);
     const [loading, setLoading] = useState<boolean>(false);
 
