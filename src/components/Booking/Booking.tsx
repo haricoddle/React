@@ -50,7 +50,6 @@ const Booking = () => {
 
     async function handleBoking(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        console.log(details);
         try {
             const res = await newBookingAPI(details);
             if (res) {

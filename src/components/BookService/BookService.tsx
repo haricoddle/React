@@ -30,7 +30,7 @@ const BookService = () => {
   const [apiError, setApiError] = useState<boolean>(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDetails({ ...details, [e.target.name]: e.target.value });
+    setDetails({ ...details, [e.target.name]: e.target.value.trim() });
   }
 
   function handleNavigate(path: string) {
@@ -39,7 +39,6 @@ const BookService = () => {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log(details);
     try {
       const res = await serviceBookingAPI(details);
       if (res) {
@@ -63,7 +62,7 @@ const BookService = () => {
         <form className='service-form' onSubmit={handleSubmit}>
           <div>
             <label htmlFor="date">Choose a date :- </label>
-            <input type="date" name='date' id='date' onChange={handleChange} required />
+            <input type="date" name='date' id='date' onChange={handleChange} min={new Date().toISOString().split("T")[0]} required />
           </div>
           <div>
             <label htmlFor="modelName">Vehicle Model :- </label>
