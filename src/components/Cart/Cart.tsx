@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Header from '../Header';
 import Footer from '../Footer';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../Redux/Store';
+import { setCartDetails } from '../../Redux/Slice/CartSlice';
 import './Cart.css'
 import { quantityUpdateAPI, showCartAPI } from '../../API/UserSide';
 import Modal from '../Modal/Modal';
@@ -13,7 +16,8 @@ const Cart = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [status, setStatus] = useState<boolean>(false);
 
-  const [cartData, setCartData] = useState([]);
+  const dispatch = useDispatch<AppDispatch>();
+  const cartData = useSelector((state: RootState) => state.cart)
 
   useEffect(() => {
     setLoading(true);
@@ -21,7 +25,7 @@ const Cart = () => {
       try {
         const res = await showCartAPI();
         const data = res.data.data;
-        setCartData(data);
+        dispatch(setCartDetails(data));
       } catch (error: any) {
         setErrorMessage(error.response.data.error);
         setApiError(true);
@@ -44,7 +48,7 @@ const Cart = () => {
 
   async function handleItemQuantity(cartId: string, operation: string) {
     try {
-      const res = await quantityUpdateAPI({cartId, operation});
+      const res = await quantityUpdateAPI({ cartId, operation });
       if (res) {
         setStatus(!status);
       }

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../Header';
 import Footer from '../Footer';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import './Vehicles.css'
-import { AppDispatch } from '../../Redux/Store';
-import { setVehicleDetails } from '../../Redux/VehicleSlice';
+import { AppDispatch, RootState } from '../../Redux/Store';
+import { setVehicleDetails } from '../../Redux/Slice/VehicleSlice';
 import { showVehiclesAPI } from '../../API/UserSide';
 import Modal from '../Modal/Modal';
 
@@ -14,8 +14,8 @@ const Vehicles = () => {
     const dispatch = useDispatch<AppDispatch>();
     const [apiError, setApiError] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const vehicleData = useSelector((state: RootState) => state.vehicles);
 
-    const [vehicleData, setVehicleData] = useState([]);
     const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
@@ -24,7 +24,6 @@ const Vehicles = () => {
             try {
                 const res = await showVehiclesAPI();
                 const data = res.data.data;
-                setVehicleData(data);
                 dispatch(setVehicleDetails(data));
             } catch (error: any) {
                 setErrorMessage(error.response.data.error);
@@ -64,7 +63,7 @@ const Vehicles = () => {
                             <p>Model :- {data.model_name}</p>
                             <p>CC :- {data.cc}</p>
                             <p>Price (Ex-Showroom) :- {data.price}</p>
-                            <img src={`http://localhost:3001/profile/${data.image_url}`} alt="vehicles" className='vehicle-img' />
+                            <img src={`${process.env.REACT_APP_URL}/profile/${data.image_url}`} alt="vehicles" className='vehicle-img' />
                         </div>
                     </div>
                 ))}

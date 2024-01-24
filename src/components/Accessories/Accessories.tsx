@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../Header';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../Redux/Store';
+import { setAccessoriesDetails } from '../../Redux/Slice/AccessorySlice';
 import './Accessories.css'
 import Footer from '../Footer';
 import { addToCartAPI, showVehicleAPI } from '../../API/UserSide';
@@ -9,10 +12,12 @@ import Modal from '../Modal/Modal';
 const Accessories = () => {
   const Navigate = useNavigate();
 
-  const [accessoriesData, setAccessoriesData] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [apiError, setApiError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState('');
+
+  const dispatch = useDispatch<AppDispatch>();
+  const accessoriesData = useSelector((state: RootState) => state.accessory);
 
 
   function handleLogout() {
@@ -31,7 +36,7 @@ const Accessories = () => {
     const fetchData = async () => {
       try {
         const res = await showVehicleAPI();
-        setAccessoriesData(res.data.data);
+        dispatch(setAccessoriesDetails(res.data.data))
       } catch (error: any) {
         setErrorMessage(error.response.data.error);
         setApiError(true);
