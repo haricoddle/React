@@ -1,0 +1,108 @@
+import React, { useEffect, useState } from 'react'
+import Footer from '../Footer';
+import Header from '../Header';
+import { useNavigate } from 'react-router-dom';
+import './BookService.css';
+import { serviceBookingAPI, showVehiclesAPI } from '../../API/UserSide';
+import Modal from '../Modal/Modal';
+
+type Details = {
+  modelName: string,
+  date: string,
+  issueFaced: string,
+}
+
+const BookService = () => {
+  const Navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState('');
+  const [vehicleData, setVehicleData] = useState([]);
+
+  const [details, setDetails] = useState<Details>({
+    modelName: '',
+    date: '',
+    issueFaced: '',
+  })
+
+  function handleLogout() {
+    localStorage.removeItem('token');
+    Navigate('/');
+  }
+
+  const [apiError, setApiError] = useState<boolean>(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDetails({ ...details, [e.target.name]: e.target.value.trim() });
+  }
+
+  const handleSelectDataChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setDetails({ ...details, [e.target.name]: e.target.value.trim() })
+  }
+
+  function handleNavigate(path: string) {
+    Navigate(path)
+  }
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    try {
+      const res = await serviceBookingAPI(details);
+      if (res) {
+        alert('Booking is successful');
+      }
+    } catch (error: any) {
+      setErrorMessage(error.response.data.error);
+      setApiError(true);
+    }
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await showVehiclesAPI();
+        const data = res.data.data;
+        setVehicleData(data);
+      } catch (error: any) {
+        setErrorMessage(error.response.data.error);
+        setApiError(true);
+      }
+    }
+    fetchData();
+  }, [])
+
+  return (
+    <>
+      <Header />
+      {apiError && (
+        <Modal onClose={() => setApiError(false)} errorMessage={errorMessage} />
+      )}
+      <i className="fa-solid fa-cart-shopping" onClick={() => handleNavigate('cart')} onKeyDown={() => handleNavigate('cart')}></i>
+      <button className='logout-btn' onClick={handleLogout}>Logout</button>
+      <div className='booking-div'>
+        <form className='service-form' onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="date">Choose a date :- </label>
+            <input type="date" name='date' id='date' onChange={handleChange} min={new Date().toISOString().split("T")[0]} required />
+          </div>
+          <div>
+            <label htmlFor="vehicle">Choose the vehicle</label>
+            <select name="vehicle" id="vehicle" onChange={handleSelectDataChange} required>
+              <option value="">Select a option</option>
+              {vehicleData.map((data: any) => (
+                <option key={data.id} value={data.model_name}>{data.model_name}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label htmlFor="issueFaced">Enter the issue Faced :- </label>
+            <input type="text" name='issueFaced' id='issueFaced' placeholder='Enter the Issue faced' onChange={handleChange} />
+          </div>
+          <button>Submit</button>
+          <div id='message-area' className='message-area'></div>
+        </form>
+      </div>
+      <Footer />
+    </>
+  )
+}
+
+export default BookService

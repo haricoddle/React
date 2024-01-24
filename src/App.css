@@ -1,38 +1,120 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.header-div{
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  padding-inline: 10px;
+  justify-content: space-between;
+  height: 100px;
+  background-color: rgb(19, 19, 19);
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.p-style{
+  display: flex;
+  padding-top: 10px;
+  gap: 1.5rem;
+  p{
+    padding: 12px;
+    font-weight: bold;
+  }
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.title-div{
+  font-size: 1.7rem;
+  font-weight: 900;
+  font-style: italic;
+}
+img{
+  width: 100%;
+  object-fit: cover;
+  height: 800px;
+}
+figure{
+  margin: 0;
+  position: relative;
+}
+
+.logo-div{
+  border-bottom: 3px solid black;
+  font-size: 1.5rem;
+  font-style: italic;
+  font-weight: bolder;
+  padding-left: 15px;
+}
+
+label{
+  font-weight: bold;
+  padding-inline: 10px;
+}
+input{
+  border: none;
+  padding: 15px;
+  border-radius: 10px;
+}
+.social-div{
+  display: flex;
+  justify-content: space-between;
+  padding-inline: 35px;
+}
+
+.user-homepage-div{
+  background-color: black;
+  color: white;
+  font-size: 2rem;
+  font-style: italic;
+  font-weight: bolder;
+  text-align: center;
+  position: relative;
+}
+.user-homepage-div p{
+  position: absolute;
+  top: 70%;
+  right: 10%;
+  cursor: pointer;
+}
+.user-homepage-div p:hover{
+  background-color: whitesmoke;
+  color: black;
+  text-decoration: underline;
+}
+.image-config{
+  height: 450px;
+  object-fit: cover;
+}
+
+.header-nav-button{
+  cursor: pointer;
+}
+
+.logout-btn{
+  border: none;
+  padding: 10px 25px;
+  border-radius: 15px;
+  background-color: rgb(246, 231, 231);
+  cursor: pointer;
+  z-index: 5;
+  top: 2.6%;
+  position: absolute;
+  right: 14%;
+}
+
+.fa-cart-shopping{
+  position: absolute;
+  right: 10%;
+  top: 6.2%;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.background-image-style{
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+.loading-mesg{
+  font-size: 3rem;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.729);
+  height: 100px;
+  margin-left: 300px;
 }
