@@ -39,11 +39,7 @@ export const showVehiclesAPI = async () => {
     return res;
 }
 
-export const decrementCartAPI = async (body: any) => {
-    const res = await apiRequest('/cart/deleteeQuantity', 'post', body);
-    return res;
-}
-export const incrementCartAPI = async (body: any) => {
-    const res = await apiRequest('/cart/adddQuantity', 'post', body);
+export const quantityUpdateAPI = async (body: any) => {
+    const res = await apiRequest('/cart/updateQuantity', 'post', body);
     return res;
 }

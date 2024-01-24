@@ -64,7 +64,7 @@ const Accessories = () => {
         {loading && <p className='loading-mesg'>Loading....</p>}
         {accessoriesData.map((data: any) => (
           <div key={data?.id} className='accessory-items'>
-            <img src={`http://localhost:3001/profile/${data.image_url}`} alt="Accessories" />
+            <img src={`${process.env.REACT_APP_URL}/profile/${data.image_url}`} alt="Accessories" />
             <p> Part name :- {data.name}</p>
             <p> Price :- {data.price}</p>
             <p> Stock :- {data.stock}</p>

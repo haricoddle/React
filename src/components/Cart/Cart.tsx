@@ -3,7 +3,7 @@ import Header from '../Header';
 import Footer from '../Footer';
 import { useNavigate } from 'react-router-dom';
 import './Cart.css'
-import { decrementCartAPI, incrementCartAPI, showCartAPI } from '../../API/UserSide';
+import { quantityUpdateAPI, showCartAPI } from '../../API/UserSide';
 import Modal from '../Modal/Modal';
 
 const Cart = () => {
@@ -42,21 +42,9 @@ const Cart = () => {
     Navigate(path)
   }
 
-  async function handleCartDecrement(cartId: string) {
+  async function handleItemQuantity(cartId: string, operation: string) {
     try {
-      const res = await decrementCartAPI({ cartId });
-      if (res) {
-        setStatus(!status);
-      }
-    } catch (error: any) {
-      setErrorMessage(error.response.data.error);
-      setApiError(true);
-    }
-  }
-
-  async function handleCartIncrement(cartId: string) {
-    try {
-      const res = await incrementCartAPI({ cartId });
+      const res = await quantityUpdateAPI({cartId, operation});
       if (res) {
         setStatus(!status);
       }
@@ -87,13 +75,13 @@ const Cart = () => {
               {cartData.map((data: any) => (
                 <div key={data?.index}>
                   <div key={data.name} className='cart'>
-                    <img src={`http://localhost:3001/profile/${data.image_url}`} alt='product' />
+                    <img src={`${process.env.REACT_APP_URL}/profile/${data.image_url}`} alt='product' />
                     <p>{data.name}</p>
-                    <p>Price:- {data.price}</p>
+                    <p>Price:- {data.price * data.quantity}</p>
                     <div className='qty-div'>
-                      <button onClick={() => handleCartDecrement(data.id)}> - </button>
+                      <button onClick={() => handleItemQuantity(data.id, 'decrement')}> - </button>
                       <p> Qty:- {data.quantity}</p>
-                      <button onClick={() => handleCartIncrement(data.id)}> + </button>
+                      <button onClick={() => handleItemQuantity(data.id, 'increment')}> + </button>
                     </div>
                   </div>
                 </div>
